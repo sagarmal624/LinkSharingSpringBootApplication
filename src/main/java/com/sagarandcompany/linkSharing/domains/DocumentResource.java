@@ -1,6 +1,6 @@
 package com.sagarandcompany.linkSharing.domains;
 
-public class DocumentResource {
+public class DocumentResource extends Resource {
     private String filePath;
 
     public String getFilePath() {

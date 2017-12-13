@@ -1,6 +1,6 @@
 package com.sagarandcompany.linkSharing.domains;
 
-public class LinkResource {
+public class LinkResource extends Resource {
 
     private String url;
 

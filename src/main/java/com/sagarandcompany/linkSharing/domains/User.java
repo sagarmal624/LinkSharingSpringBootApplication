@@ -1,16 +1,21 @@
 package com.sagarandcompany.linkSharing.domains;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class User {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String firstName;
     private String lastName;
     private String username;
     private String password;
     private String email;
+    @Column(nullable = false)
     private String filePath;
-    private boolean admin;
+    private boolean isAdmin = false;
 
     public String getFilePath() {
         return filePath;
@@ -83,11 +88,11 @@ public class User {
 
 
     public boolean isAdmin() {
-        return admin;
+        return isAdmin;
     }
 
     public void setAdmin(boolean admin) {
-        this.admin = admin;
+        this.isAdmin = admin;
     }
 
     public boolean isActive() {
@@ -107,7 +112,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", filePath='" + filePath + '\'' +
-                ", admin=" + admin +
+                ", isAdmin=" + isAdmin +
                 ", active=" + active +
                 ", dateCreated=" + dateCreated +
                 ", dateUpdated=" + dateUpdated +
