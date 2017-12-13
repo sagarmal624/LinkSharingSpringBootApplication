@@ -16,6 +16,8 @@ public class User {
     @Column(nullable = false)
     private String filePath;
     private boolean isAdmin = false;
+    private boolean active;
+    private Date dateCreated;
 
     public String getFilePath() {
         return filePath;
@@ -25,8 +27,6 @@ public class User {
         this.filePath = filePath;
     }
 
-    private boolean active;
-    private Date dateCreated;
 
     public Date getDateCreated() {
         return dateCreated;
