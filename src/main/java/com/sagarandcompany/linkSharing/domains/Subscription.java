@@ -2,8 +2,7 @@ package com.sagarandcompany.linkSharing.domains;
 
 import java.util.Date;
 
-public class Subscription
-{
+public class Subscription {
     private Topic topic;
     private User user;
     private Date datecreated;

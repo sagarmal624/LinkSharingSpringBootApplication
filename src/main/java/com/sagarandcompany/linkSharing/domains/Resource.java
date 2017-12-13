@@ -1,13 +1,28 @@
 package com.sagarandcompany.linkSharing.domains;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class Resource {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "Type")
+public abstract class Resource {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private long id;
 
     private String description;
-    private User createdBy;
-    private Topic topic;
+    //    @Column(nullable = false)
+//    private User createdBy;
+//    @Column(nullable = false)
+//    private Topic topic;
+    @Column(nullable = false)
     private Date datecreated;
+    @Column(nullable = false)
     private Date lastUpdated;
 
     public String getDescription() {
@@ -18,21 +33,21 @@ public class Resource {
         this.description = description;
     }
 
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Topic getTopic() {
-        return topic;
-    }
-
-    public void setTopic(Topic topic) {
-        this.topic = topic;
-    }
+//    public User getCreatedBy() {
+//        return createdBy;
+//    }
+//
+//    public void setCreatedBy(User createdBy) {
+//        this.createdBy = createdBy;
+//    }
+//
+//    public Topic getTopic() {
+//        return topic;
+//    }
+//
+//    public void setTopic(Topic topic) {
+//        this.topic = topic;
+//    }
 
     public Date getDatecreated() {
         return datecreated;
@@ -50,14 +65,5 @@ public class Resource {
         this.lastUpdated = lastUpdated;
     }
 
-    @Override
-    public String toString() {
-        return "Resource{" +
-                "description='" + description + '\'' +
-                ", createdBy=" + createdBy +
-                ", topic=" + topic +
-                ", datecreated=" + datecreated +
-                ", lastUpdated=" + lastUpdated +
-                '}';
-    }
+
 }

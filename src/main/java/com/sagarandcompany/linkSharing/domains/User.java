@@ -1,16 +1,39 @@
 package com.sagarandcompany.linkSharing.domains;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
+    @Column(nullable = false)
     private String firstName;
+
     private String lastName;
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String email;
+
     private String filePath;
-    private boolean admin;
+    private boolean admin = false;
+    private boolean active = true;
+    @Column(nullable = false)
+    private Date dateCreated = new Date();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFilePath() {
         return filePath;
@@ -20,8 +43,6 @@ public class User {
         this.filePath = filePath;
     }
 
-    private boolean active;
-    private Date dateCreated;
 
     public Date getDateCreated() {
         return dateCreated;
@@ -98,10 +119,12 @@ public class User {
         this.active = active;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
@@ -113,4 +136,5 @@ public class User {
                 ", dateUpdated=" + dateUpdated +
                 '}';
     }
+
 }

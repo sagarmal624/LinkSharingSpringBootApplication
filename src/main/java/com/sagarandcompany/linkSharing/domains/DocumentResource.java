@@ -1,6 +1,14 @@
 package com.sagarandcompany.linkSharing.domains;
 
-public class DocumentResource {
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("DocumentResource")
+public class DocumentResource extends Resource {
+    @Column(name = "filePath")
     private String filePath;
 
     public String getFilePath() {
