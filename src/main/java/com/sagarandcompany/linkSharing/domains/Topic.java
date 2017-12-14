@@ -1,24 +1,40 @@
 package com.sagarandcompany.linkSharing.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.Date;
+import com.sagarandcompany.linkSharing.utility.Visibility;
 
-@Entity
-public class Topic {
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity()
+public class Topic extends BaseEntity {
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long topic_id;
+    @Column(name = "topicName")
     private String name;
-    //    private User createdBy;
-    private Date dateCreated;
-    private Date lastUpdated;
+    @OneToOne
+    private User createdBy;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "topic_resource", joinColumns = {@JoinColumn(name = "topic_id")}, inverseJoinColumns = {@JoinColumn(name = "resource_id")})
+    private List<Resource> resources = new ArrayList<>();
 
-    public Long getId() {
-        return id;
+    private Visibility visibility;
+
+    public List<Resource> getResources() {
+        return resources;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setResources(List<Resource> resources) {
+        this.resources = resources;
+    }
+
+    public Long getTopic_id() {
+        return topic_id;
+    }
+
+    public void setTopic_id(Long topic_id) {
+        this.topic_id = topic_id;
     }
 
     public String getName() {
@@ -29,37 +45,20 @@ public class Topic {
         this.name = name;
     }
 
-//    public User getCreatedBy() {
-//        return createdBy;
-//    }
-//
-//    public void setCreatedBy(User createdBy) {
-//        this.createdBy = createdBy;
-//    }
-
-    public Date getDateCreated() {
-        return dateCreated;
+    public User getCreatedBy() {
+        return createdBy;
     }
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public Date getLastUpdated() {
-        return lastUpdated;
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "topic_id=" + topic_id +
+                ", name='" + name + '\'' +
+                ", createdBy=" + createdBy +
+                '}';
     }
-
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
-//    @Override
-//    public String toString() {
-//        return "Topic{" +
-//                "name='" + name + '\'' +
-//                ", createdBy=" + createdBy +
-//                ", dateCreated=" + dateCreated +
-//                ", lastUpdated=" + lastUpdated +
-//                '}';
-//    }
 }

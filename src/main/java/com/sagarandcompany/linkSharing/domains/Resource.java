@@ -1,29 +1,22 @@
 package com.sagarandcompany.linkSharing.domains;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "Type")
-public abstract class Resource {
+public abstract class Resource extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
+    @Column(name = "resource_id")
+    private Long resource_id;
 
     private String description;
-    //    @Column(nullable = false)
-//    private User createdBy;
-//    @Column(nullable = false)
-//    private Topic topic;
-    @Column(nullable = false)
-    private Date datecreated;
-    @Column(nullable = false)
-    private Date lastUpdated;
+
+    @OneToOne
+    private User createdBy;
+    @OneToOne
+    private Topic topic;
 
     public String getDescription() {
         return description;
@@ -33,37 +26,29 @@ public abstract class Resource {
         this.description = description;
     }
 
-//    public User getCreatedBy() {
-//        return createdBy;
-//    }
-//
-//    public void setCreatedBy(User createdBy) {
-//        this.createdBy = createdBy;
-//    }
-//
-//    public Topic getTopic() {
-//        return topic;
-//    }
-//
-//    public void setTopic(Topic topic) {
-//        this.topic = topic;
-//    }
-
-    public Date getDatecreated() {
-        return datecreated;
+    public User getCreatedBy() {
+        return createdBy;
     }
 
-    public void setDatecreated(Date datecreated) {
-        this.datecreated = datecreated;
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public Date getLastUpdated() {
-        return lastUpdated;
+    public Topic getTopic() {
+        return topic;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
-
+    @Override
+    public String toString() {
+        return "Resource{" +
+                "id=" + resource_id +
+                ", description='" + description + '\'' +
+                ", createdBy=" + createdBy +
+                ", topic=" + topic +
+                '}';
+    }
 }

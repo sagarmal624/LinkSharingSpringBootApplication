@@ -2,9 +2,13 @@ package com.sagarandcompany.linkSharing.services;
 
 import com.sagarandcompany.linkSharing.domains.User;
 import com.sagarandcompany.linkSharing.repository.UserRepository;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.internal.SessionFactoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +16,8 @@ import java.util.Map;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    EntityManagerFactory entityManagerFactory;
 
     public Map save(User user) {
         User savedUser = userRepository.saveAndFlush(user);
@@ -27,6 +33,13 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findOne(id);
+        return getSession().get(User.class, id);
+    }
+
+    public Session getSession() {
+
+        SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
+        Session session = sessionFactory.getCurrentSession();
+        return session;
     }
 }

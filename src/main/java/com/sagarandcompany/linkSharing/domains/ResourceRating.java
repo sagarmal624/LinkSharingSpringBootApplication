@@ -1,11 +1,19 @@
 package com.sagarandcompany.linkSharing.domains;
 
+import javax.persistence.*;
+
+@Entity
 public class ResourceRating {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @OneToOne
     private Resource resource;
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
     private int score;
-
+ 
     public Resource getResource() {
         return resource;
     }

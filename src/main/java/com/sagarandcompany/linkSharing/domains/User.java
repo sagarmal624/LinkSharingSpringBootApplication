@@ -1,10 +1,13 @@
 package com.sagarandcompany.linkSharing.domains;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
+
 
 @Entity
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,20 +15,24 @@ public class User {
     private Long id;
     @Column(nullable = false)
     private String firstName;
-
     private String lastName;
     @Column(nullable = false)
+    @NotBlank
     private String username;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
     private String email;
-
     private String filePath;
     private boolean admin = false;
     private boolean active = true;
-    @Column(nullable = false)
-    private Date dateCreated = new Date();
+    @Transient
+    private String fullname;
+
+    public String getFullname() {
+        return firstName + " " + lastName;
+    }
+
 
     public Long getId() {
         return id;
@@ -42,25 +49,6 @@ public class User {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
-
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Date getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
-    }
-
-    private Date dateUpdated;
 
     public String getFirstName() {
         return firstName;
@@ -102,7 +90,6 @@ public class User {
         this.email = email;
     }
 
-
     public boolean isAdmin() {
         return admin;
     }
@@ -132,8 +119,6 @@ public class User {
                 ", filePath='" + filePath + '\'' +
                 ", admin=" + admin +
                 ", active=" + active +
-                ", dateCreated=" + dateCreated +
-                ", dateUpdated=" + dateUpdated +
                 '}';
     }
 

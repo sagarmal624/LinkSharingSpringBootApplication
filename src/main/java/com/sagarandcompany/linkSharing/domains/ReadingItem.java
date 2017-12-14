@@ -1,8 +1,15 @@
 package com.sagarandcompany.linkSharing.domains;
 
-public class ReadingItem {
+import javax.persistence.*;
 
+@Entity
+public class ReadingItem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @OneToOne
     private Resource resource;
+    @OneToOne
     private User user;
     private boolean isRead;
 

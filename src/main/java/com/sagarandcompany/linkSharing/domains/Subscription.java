@@ -1,11 +1,16 @@
 package com.sagarandcompany.linkSharing.domains;
 
-import java.util.Date;
+import javax.persistence.*;
 
-public class Subscription {
+@Entity
+public class Subscription extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @OneToOne
     private Topic topic;
+    @OneToOne
     private User user;
-    private Date datecreated;
 
     public Topic getTopic() {
         return topic;
@@ -23,20 +28,13 @@ public class Subscription {
         this.user = user;
     }
 
-    public Date getDatecreated() {
-        return datecreated;
-    }
-
-    public void setDatecreated(Date datecreated) {
-        this.datecreated = datecreated;
-    }
 
     @Override
     public String toString() {
         return "Subscription{" +
                 "topic=" + topic +
                 ", user=" + user +
-                ", datecreated=" + datecreated +
+
                 '}';
     }
 }

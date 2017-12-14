@@ -15,7 +15,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-
     @PostMapping("/save")
     @ResponseBody
     public Map save(@ModelAttribute("user") User user) {
@@ -27,4 +26,5 @@ public class UserController {
     public User getUser(@PathVariable("id") Long id) {
         return userService.findById(id);
     }
+
 }
