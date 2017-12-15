@@ -1,7 +1,6 @@
 package com.sagarandcompany.linkSharing.domains;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
