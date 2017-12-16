@@ -9,8 +9,10 @@ public class Subscription extends BaseEntity {
     @Column(name="subscription_id")
     private Long subscription_id;
     @OneToOne
+    @JoinColumn(nullable=false)
     private Topic topic;
     @OneToOne
+    @JoinColumn(nullable = false)
     private User user;
 
     public Long getSubscription_id() {
@@ -37,13 +39,12 @@ public class Subscription extends BaseEntity {
         this.user = user;
     }
 
-
     @Override
     public String toString() {
         return "Subscription{" +
-                "topic=" + topic +
+                "subscription_id=" + subscription_id +
+                ", topic=" + topic +
                 ", user=" + user +
-
                 '}';
     }
 }
