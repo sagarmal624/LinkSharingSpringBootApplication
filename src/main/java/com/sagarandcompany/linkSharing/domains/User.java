@@ -43,6 +43,8 @@ public class User extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "user_topics", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "topic_id")})
     private List<Topic> topics = new ArrayList<>();
+
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "user_reading_item", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "reading_item_id")})
     private List<ReadingItem> readingitems = new ArrayList<>();
