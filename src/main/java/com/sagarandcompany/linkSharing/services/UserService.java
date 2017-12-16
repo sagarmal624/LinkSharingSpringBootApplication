@@ -16,7 +16,7 @@ public class UserService {
     public Map save(User user) {
         User savedUser = userRepository.save(user);
         Map map = new HashMap();
-        if (savedUser.getId() != null) {
+        if (savedUser.getUser_id() != null) {
             map.put("status", true);
             map.put("message", "record is created successfullyy");
         } else {

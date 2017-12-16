@@ -13,13 +13,15 @@ public class Topic extends BaseEntity {
     private Long topic_id;
     @Column(name = "topicName")
     private String name;
-    @OneToOne
+    @OneToOne()
+    @JoinColumn(nullable = true)
     private User createdBy;
+
+    private Visibility visibility;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "topic_resource", joinColumns = {@JoinColumn(name = "topic_id")}, inverseJoinColumns = {@JoinColumn(name = "resource_id")})
     private List<Resource> resources = new ArrayList<>();
 
-    private Visibility visibility;
 
     public List<Resource> getResources() {
         return resources;
@@ -51,6 +53,14 @@ public class Topic extends BaseEntity {
 
     public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public Visibility getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Visibility visibility) {
+        this.visibility = visibility;
     }
 
     @Override

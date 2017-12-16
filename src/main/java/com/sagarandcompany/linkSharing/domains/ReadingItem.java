@@ -6,12 +6,30 @@ import javax.persistence.*;
 public class ReadingItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name="reading_item_id")
+    private Long reading_item_id;
     @OneToOne
     private Resource resource;
     @OneToOne
     private User user;
-    private boolean isRead;
+    private Boolean isRead;
+
+
+    public Long getReading_item_id() {
+        return reading_item_id;
+    }
+
+    public void setReading_item_id(Long reading_item_id) {
+        this.reading_item_id = reading_item_id;
+    }
+
+    public Boolean getRead() {
+        return isRead;
+    }
+
+    public void setRead(Boolean read) {
+        isRead = read;
+    }
 
     public Resource getResource() {
         return resource;
@@ -29,18 +47,12 @@ public class ReadingItem {
         this.user = user;
     }
 
-    public boolean isRead() {
-        return isRead;
-    }
-
-    public void setRead(boolean read) {
-        isRead = read;
-    }
 
     @Override
     public String toString() {
         return "ReadingItem{" +
-                "resource=" + resource +
+                "reading_item_id=" + reading_item_id +
+                ", resource=" + resource +
                 ", user=" + user +
                 ", isRead=" + isRead +
                 '}';

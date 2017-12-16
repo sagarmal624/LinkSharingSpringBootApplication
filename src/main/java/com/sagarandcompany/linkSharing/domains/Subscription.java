@@ -6,11 +6,20 @@ import javax.persistence.*;
 public class Subscription extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name="subscription_id")
+    private Long subscription_id;
     @OneToOne
     private Topic topic;
     @OneToOne
     private User user;
+
+    public Long getSubscription_id() {
+        return subscription_id;
+    }
+
+    public void setSubscription_id(Long subscription_id) {
+        this.subscription_id = subscription_id;
+    }
 
     public Topic getTopic() {
         return topic;

@@ -1,9 +1,13 @@
 package com.sagarandcompany.linkSharing.domains;
 
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -11,8 +15,8 @@ public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "user_id")
+    private Long user_id;
     @Column(nullable = false)
     private String firstName;
     private String lastName;
@@ -23,23 +27,62 @@ public class User extends BaseEntity {
     private String password;
     @Column(nullable = false)
     private String email;
+
     private String filePath;
-    private boolean admin = false;
-    private boolean active = true;
+    private Boolean admin = false;
+
+    private Boolean active = true;
     @Transient
     private String fullname;
+
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_subscription", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "subscription_id")})
+    private List<Subscription> Subscriptions = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_topics", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "topic_id")})
+    private List<Topic> topics = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_reading_item", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "reading_item_id")})
+    private List<ReadingItem> readingitems = new ArrayList<>();
+
+
+    public List<Subscription> getSubscriptions() {
+        return Subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        Subscriptions = subscriptions;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public List<ReadingItem> getReadingitems() {
+        return readingitems;
+    }
+
+    public void setReadingitems(List<ReadingItem> readingitems) {
+        this.readingitems = readingitems;
+    }
 
     public String getFullname() {
         return firstName + " " + lastName;
     }
 
-
-    public Long getId() {
-        return id;
+    public Long getUser_id() {
+        return user_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 
     public String getFilePath() {
@@ -90,27 +133,30 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
-    public boolean isAdmin() {
+    public Boolean getAdmin() {
         return admin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + user_id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
