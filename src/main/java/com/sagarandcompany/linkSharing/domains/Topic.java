@@ -13,12 +13,12 @@ public class Topic extends BaseEntity {
     private Long topic_id;
     @Column(name = "topicName")
     private String name;
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = true)
     private User createdBy;
 
     private Visibility visibility;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "topic_resource", joinColumns = {@JoinColumn(name = "topic_id")}, inverseJoinColumns = {@JoinColumn(name = "resource_id")})
     private List<Resource> resources = new ArrayList<>();
 
