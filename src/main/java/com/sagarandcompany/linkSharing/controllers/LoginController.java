@@ -24,5 +24,10 @@ public class LoginController {
         return loginService.validate(username, password, httpSesssion);
     }
 
+    @GetMapping("/logout")
+    @ResponseBody
+    public ResponseDTO logout(HttpSession httpSesssion) {
+        return loginService.logout(httpSesssion);
+    }
 
 }
