@@ -1,11 +1,16 @@
 package com.sagarandcompany.linkSharing.repository.topicRepository;
 
 import com.sagarandcompany.linkSharing.domains.Topic;
+import com.sagarandcompany.linkSharing.domains.User;
+import com.sagarandcompany.linkSharing.repository.userRepository.UserRepositoryImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -14,12 +19,20 @@ public class TopicRepositoryImpl implements TopicRepository {
     private SessionFactory sessionFactory;
 
     public Topic save(Topic topic) {
-        getSession().save(topic);
-        if (topic.getTopic_id() != null)
+        Session session = getSession();
+        User user = session.get(User.class, User.getLoginUser().getUser_id());
+        topic.setCreatedBy(user);
+
+        List<Topic> topicList = user.getTopics();
+        if (topicList == null) {
+            topicList = new ArrayList<>();
+        }
+        topicList.add(topic);
+        session.saveOrUpdate(user);
+        if (topicList.size() == user.getTopics().size())
             return topic;
         else
             return null;
-
     }
 
     private Session getSession() {

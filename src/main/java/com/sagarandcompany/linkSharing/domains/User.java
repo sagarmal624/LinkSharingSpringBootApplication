@@ -4,8 +4,11 @@ package com.sagarandcompany.linkSharing.domains;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,6 +156,16 @@ public class User extends BaseEntity {
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
+    }
+
+    public Boolean checkUsernameAndPassword(String username, String password) {
+        return username.equals(getUsername()) && password.equals(getPassword());
+    }
+
+    public static User getLoginUser() {
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession(true);
+        return (User) session.getAttribute("user");
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.sagarandcompany.linkSharing.controllers;
 
 import com.sagarandcompany.linkSharing.domains.Topic;
 import com.sagarandcompany.linkSharing.services.TopicService;
+import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,7 +20,7 @@ public class TopicController {
 
     @PostMapping("/save")
     @ResponseBody
-    public Map save(@ModelAttribute("topic") Topic topic) {
+    public ResponseDTO save(@ModelAttribute("topic") Topic topic) {
         return topicService.save(topic);
     }
 }
