@@ -155,6 +155,10 @@ public class User extends BaseEntity {
         this.fullname = fullname;
     }
 
+    public Boolean checkUsernameAndPassword(String username, String password) {
+        return username.equals(getUsername()) && password.equals(getPassword());
+    }
+
     @Override
     public String toString() {
         return "User{" +

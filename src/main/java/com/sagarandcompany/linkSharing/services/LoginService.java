@@ -3,10 +3,12 @@ package com.sagarandcompany.linkSharing.services;
 import com.sagarandcompany.linkSharing.domains.User;
 import com.sagarandcompany.linkSharing.repository.loginRepository.LoginRepository;
 import com.sagarandcompany.linkSharing.repository.userRepository.UserRepositoryImpl;
+import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.jws.soap.SOAPBinding;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,19 +19,27 @@ public class LoginService {
     LoginRepository loginRepository;
 
 
-    public Map validate(String username, String password) {
+    public ResponseDTO validate(String username, String password, HttpSession httpSesssion) {
 
-        User user = loginRepository.findByUsernameAndPassword(username, password);
-        Map map = new HashMap();
-        if (user != null) {
-            map.put("status", true);
-            map.put("message", "User is login successfullyy");
-
+        User sessionUser = (User) httpSesssion.getAttribute("user");
+        ResponseDTO responseDTO = new ResponseDTO();
+        if (sessionUser != null) {
+            if (sessionUser.checkUsernameAndPassword(username, password)) {
+                responseDTO.setMessageAndStatus("User Already logined", true);
+            } else {
+                responseDTO.setMessageAndStatus("Invalid Username and password", false);
+            }
         } else {
-            map.put("status", false);
-            map.put("message", "Invalid username and password");
+            User user = loginRepository.findByUsernameAndPassword(username, password);
+            if (user != null) {
+                httpSesssion.setAttribute("user", user);
+                responseDTO.setMessageAndStatus("User logined", true);
+
+            } else {
+                responseDTO.setMessageAndStatus("Invalid Username and password", false);
+            }
         }
-        return map;
+        return responseDTO;
     }
 
 
