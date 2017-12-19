@@ -22,6 +22,7 @@ public class TopicRepositoryImpl implements TopicRepository {
         Session session = getSession();
         User user = session.get(User.class, User.getLoginUser().getUser_id());
         topic.setCreatedBy(user);
+
         List<Topic> topicList = user.getTopics();
         if (topicList == null) {
             topicList = new ArrayList<>();

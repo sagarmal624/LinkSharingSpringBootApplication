@@ -2,15 +2,12 @@ package com.sagarandcompany.linkSharing.services;
 
 import com.sagarandcompany.linkSharing.domains.User;
 import com.sagarandcompany.linkSharing.repository.loginRepository.LoginRepository;
-import com.sagarandcompany.linkSharing.repository.userRepository.UserRepositoryImpl;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class LoginService {
@@ -18,6 +15,8 @@ public class LoginService {
     @Autowired
     LoginRepository loginRepository;
 
+    @Value("${linksharing.login.error}")
+    private String errorMsg;
 
     public ResponseDTO validate(String username, String password, HttpSession httpSesssion) {
 
@@ -27,7 +26,7 @@ public class LoginService {
             if (sessionUser.checkUsernameAndPassword(username, password)) {
                 responseDTO.setMessageAndStatus("User Already logined", true);
             } else {
-                responseDTO.setMessageAndStatus("Invalid Username and password", false);
+                responseDTO.setMessageAndStatus(errorMsg, false);
             }
         } else {
             User user = loginRepository.findByUsernameAndPassword(username, password);
@@ -36,7 +35,7 @@ public class LoginService {
                 responseDTO.setMessageAndStatus("User logined", true);
 
             } else {
-                responseDTO.setMessageAndStatus("Invalid Username and password", false);
+                responseDTO.setMessageAndStatus(errorMsg, false);
             }
         }
         return responseDTO;
