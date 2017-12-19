@@ -18,6 +18,14 @@ public abstract class Resource extends BaseEntity {
     @OneToOne
     private Topic topic;
 
+    public Long getResource_id() {
+        return resource_id;
+    }
+
+    public void setResource_id(Long resource_id) {
+        this.resource_id = resource_id;
+    }
+
     public String getDescription() {
         return description;
     }

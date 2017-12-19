@@ -8,19 +8,19 @@ public class ResourceRating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "resource_rating_id")
-    private Long id;
+    private Long resource_rating_id;
     @OneToOne
     private Resource resource;
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
     private int score;
 
-    public Long getId() {
-        return id;
+    public Long getResource_rating_id() {
+        return resource_rating_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setResource_rating_id(Long resource_rating_id) {
+        this.resource_rating_id = resource_rating_id;
     }
 
     public Resource getResource() {
@@ -50,7 +50,8 @@ public class ResourceRating {
     @Override
     public String toString() {
         return "ResourceRating{" +
-                "resource=" + resource +
+                "resource_rating_id=" + resource_rating_id +
+                ", resource=" + resource +
                 ", user=" + user +
                 ", score=" + score +
                 '}';
