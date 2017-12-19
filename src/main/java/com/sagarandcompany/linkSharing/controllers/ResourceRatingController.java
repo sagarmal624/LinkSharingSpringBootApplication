@@ -20,8 +20,7 @@ public class ResourceRatingController {
 
     @PostMapping("/save")
     @ResponseBody
-    public Map save(@ModelAttribute("resorcerating") ResourceRating resourceRating)
-    {
+    public Map save(@ModelAttribute("resorcerating") ResourceRating resourceRating) {
         return resorceRatingService.save(resourceRating);
 
     }
