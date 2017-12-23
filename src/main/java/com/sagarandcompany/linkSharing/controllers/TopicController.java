@@ -5,10 +5,7 @@ import com.sagarandcompany.linkSharing.services.TopicService;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -23,4 +20,13 @@ public class TopicController {
     public ResponseDTO save(@ModelAttribute("topic") Topic topic) {
         return topicService.save(topic);
     }
+
+//    @GetMapping("/get/{id}")
+//    @ResponseBody
+//    public Topic getTopics(@PathVariable("id") Long id)
+//    {
+//     return topicService.getTopics(id);
+//
+//    }
+
 }

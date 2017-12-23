@@ -2,34 +2,32 @@ package com.sagarandcompany.linkSharing.services;
 
 import com.sagarandcompany.linkSharing.domains.ReadingItem;
 import com.sagarandcompany.linkSharing.repository.ReadingItemRepository.ReadingItemImpl;
+import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class ReadingItemService {
 
-@Autowired
-   ReadingItemImpl readingItemImpl;
-  public Map save(ReadingItem readingItem)
-  {
-      ReadingItem savedreadingitem=readingItemImpl.save(readingItem);
-      Map<String, Object> map = new HashMap<>();
-      if(savedreadingitem!=null)
-      {
-          map.put("message","Record Saved Successfully");
-          map.put("status" , true);
+    @Autowired
+    ReadingItemImpl readingItemImpl;
 
-      }
-      else
-      {
-          map.put("message","Record not Saved ");
-          map.put("status" , false);
+    @Value("${linksharing.readingitem.success}")
+    private String success;
 
-      }
-  return map;
-  }
+    @Value("${linksharing.readingitem.error}")
+    private String error;
+
+    public ResponseDTO save(ReadingItem readingItem) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        ReadingItem savedreadingitem = readingItemImpl.save(readingItem);
+        if (savedreadingitem != null) {
+            responseDTO.setMessageAndStatus(success, true);
+        } else {
+            responseDTO.setMessageAndStatus(error, false);
+        }
+        return responseDTO;
+    }
 
 }

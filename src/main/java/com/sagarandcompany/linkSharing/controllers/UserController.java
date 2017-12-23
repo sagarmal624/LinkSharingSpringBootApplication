@@ -2,6 +2,7 @@ package com.sagarandcompany.linkSharing.controllers;
 
 import com.sagarandcompany.linkSharing.domains.User;
 import com.sagarandcompany.linkSharing.services.UserService;
+import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class UserController {
 
     @PostMapping("/save")
     @ResponseBody
-    public Map save(@ModelAttribute("user") User user) {
+    public ResponseDTO save(@ModelAttribute("user") User user) {
         return userService.save(user);
     }
 
@@ -25,6 +26,12 @@ public class UserController {
     @ResponseBody
     public User getUser(@PathVariable("id") Long id) {
         return userService.findById(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public ResponseDTO deleteUser(@PathVariable("id") Long id) {
+        return userService.delete(id);
     }
 
 }

@@ -22,6 +22,15 @@ public class UserRepositoryImpl implements UserRepository {
         return getSession().get(User.class, id);
     }
 
+    public Boolean delete(Long id) {
+        User user = findByUser(id);
+        if (user != null) {
+            getSession().delete(user);
+            return true;
+        } else
+            return false;
+    }
+
     public Session getSession() {
         Session session = sessionFactory.getCurrentSession();
         return session;

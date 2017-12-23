@@ -2,31 +2,48 @@ package com.sagarandcompany.linkSharing.services;
 
 import com.sagarandcompany.linkSharing.domains.User;
 import com.sagarandcompany.linkSharing.repository.userRepository.UserRepositoryImpl;
+import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class UserService {
     @Autowired
     UserRepositoryImpl userRepository;
+    @Value(" ${linksharing.user.success}")
+    private String success;
 
-    public Map save(User user) {
+    @Value("${linksharing.user.error}")
+    private String error;
+
+    public ResponseDTO save(User user) {
+
+        ResponseDTO responseDTO = new ResponseDTO();
+
         User savedUser = userRepository.save(user);
-        Map map = new HashMap();
         if (savedUser.getUser_id() != null) {
-            map.put("status", true);
-            map.put("message", "record is created successfullyy");
+
+            responseDTO.setMessageAndStatus(success, true);
+
         } else {
-            map.put("status", false);
-            map.put("message", "record is not Saved successfullyy");
+            responseDTO.setMessageAndStatus(error, false);
         }
-        return map;
+        return responseDTO;
     }
 
     public User findById(Long id) {
         return userRepository.findByUser(id);
     }
+
+    public ResponseDTO delete(Long id) {
+        ResponseDTO responseDTO = new ResponseDTO(false);
+
+        if (userRepository.delete(id)) {
+            responseDTO.setMessageAndStatus("Deleted Successfully", true);
+        } else
+            responseDTO.setMessage("Something went wrong");
+        return responseDTO;
+    }
+
 }

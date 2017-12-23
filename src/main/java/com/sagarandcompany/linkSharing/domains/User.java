@@ -1,8 +1,6 @@
 package com.sagarandcompany.linkSharing.domains;
 
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -23,12 +21,13 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String firstName;
     private String lastName;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NotBlank
     private String username;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
+
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String filePath;

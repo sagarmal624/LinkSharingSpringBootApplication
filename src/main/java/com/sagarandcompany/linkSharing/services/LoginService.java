@@ -16,26 +16,34 @@ public class LoginService {
     LoginRepository loginRepository;
 
     @Value("${linksharing.login.error}")
-    private String errorMsg;
+    private String error;
+
+    @Value("${linksharing.login.success}")
+    private String success;
+
+    @Value("${linksharing.login.message}")
+    private String message;
+
 
     public ResponseDTO validate(String username, String password, HttpSession httpSesssion) {
-
         User sessionUser = (User) httpSesssion.getAttribute("user");
         ResponseDTO responseDTO = new ResponseDTO();
         if (sessionUser != null) {
             if (sessionUser.checkUsernameAndPassword(username, password)) {
-                responseDTO.setMessageAndStatus("User Already logined", true);
+               // responseDTO.setMessageAndStatus("User Already logined", true);
+                responseDTO.setMessageAndStatus(message,true);
             } else {
-                responseDTO.setMessageAndStatus(errorMsg, false);
+                responseDTO.setMessageAndStatus(error, false);
             }
         } else {
             User user = loginRepository.findByUsernameAndPassword(username, password);
             if (user != null) {
                 httpSesssion.setAttribute("user", user);
-                responseDTO.setMessageAndStatus("User logined", true);
+               // responseDTO.setMessageAndStatus("User logined", true);
+                responseDTO.setMessageAndStatus(success,true);
 
             } else {
-                responseDTO.setMessageAndStatus(errorMsg, false);
+                responseDTO.setMessageAndStatus(error, false);
             }
         }
         return responseDTO;

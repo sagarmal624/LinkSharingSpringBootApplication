@@ -2,7 +2,6 @@ package com.sagarandcompany.linkSharing.repository.topicRepository;
 
 import com.sagarandcompany.linkSharing.domains.Topic;
 import com.sagarandcompany.linkSharing.domains.User;
-import com.sagarandcompany.linkSharing.repository.userRepository.UserRepositoryImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

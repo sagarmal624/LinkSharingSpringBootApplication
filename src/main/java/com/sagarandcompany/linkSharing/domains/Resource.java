@@ -10,17 +10,17 @@ public abstract class Resource extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "resource_id")
     private Long resource_id;
-
+    @Column(length = 65536)
     private String description;
+
+    public Long getResource_id() {
+        return resource_id;
+    }
 
     @OneToOne
     private User createdBy;
     @OneToOne
     private Topic topic;
-
-    public Long getResource_id() {
-        return resource_id;
-    }
 
     public void setResource_id(Long resource_id) {
         this.resource_id = resource_id;

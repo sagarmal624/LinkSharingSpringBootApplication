@@ -1,13 +1,12 @@
 package com.sagarandcompany.linkSharing.controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sagarandcompany.linkSharing.domains.Subscription;
 import com.sagarandcompany.linkSharing.services.SubscriptionService;
+import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -19,11 +18,15 @@ public class SubscriptionController {
 
     @PostMapping("/save")
     @ResponseBody
-    public Map save(@ModelAttribute("subscrptn") Subscription subscrptn)
-    {
-        return  subscriptionService.save(subscrptn);
+    public ResponseDTO save(@ModelAttribute("subscrptn") Subscription subscrptn) {
+        return subscriptionService.save(subscrptn);
 
     }
 
+    @GetMapping("/get/{id}")
+    @ResponseBody
+    public ResponseDTO get(@PathVariable Long id) {
+        return subscriptionService.getSubscription(id);
+    }
 
 }

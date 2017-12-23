@@ -1,18 +1,21 @@
 package com.sagarandcompany.linkSharing.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 public class Subscription extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="subscription_id")
+    @Column(name = "subscription_id")
     private Long subscription_id;
     @OneToOne
-    @JoinColumn(nullable=false)
+    @JoinColumn(nullable = false)
     private Topic topic;
     @OneToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
     private User user;
 
     public Long getSubscription_id() {
