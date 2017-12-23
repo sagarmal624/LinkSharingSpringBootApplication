@@ -1,6 +1,7 @@
 package com.sagarandcompany.linkSharing.repository.userRepository;
 
 import com.sagarandcompany.linkSharing.domains.User;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,19 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     public Boolean delete(Long id) {
-        User user = findByUser(id);
+        Session session = getSession();
+
+        User user = session.get(User.class, id);
         if (user != null) {
-            getSession().delete(user);
+            Query deleteRatingQuery = session.createQuery("delete from ResourceRating where user=:user");
+            deleteRatingQuery.setParameter("user", user);
+            deleteRatingQuery.executeUpdate();
+
+            Query deleteReadingItemQuery = session.createQuery("delete from ReadingItem where user=:user");
+            deleteReadingItemQuery.setParameter("user", user);
+            deleteReadingItemQuery.executeUpdate();
+
+            session.delete(user);
             return true;
         } else
             return false;

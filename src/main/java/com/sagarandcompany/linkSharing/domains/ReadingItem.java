@@ -6,9 +6,9 @@ import javax.persistence.*;
 public class ReadingItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="reading_item_id")
+    @Column(name = "reading_item_id")
     private Long reading_item_id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Resource resource;
     @OneToOne
     private User user;

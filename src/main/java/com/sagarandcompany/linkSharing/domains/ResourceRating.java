@@ -9,9 +9,9 @@ public class ResourceRating {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "resource_rating_id")
     private Long resource_rating_id;
-    @OneToOne
-    private Resource resource;
     @OneToOne(cascade = CascadeType.ALL)
+    private Resource resource;
+    @OneToOne
     private User user;
     private int score;
 
