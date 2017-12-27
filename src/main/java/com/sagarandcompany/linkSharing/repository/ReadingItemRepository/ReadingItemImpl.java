@@ -3,6 +3,8 @@ package com.sagarandcompany.linkSharing.repository.ReadingItemRepository;
 import com.sagarandcompany.linkSharing.domains.ReadingItem;
 import com.sagarandcompany.linkSharing.domains.Resource;
 import com.sagarandcompany.linkSharing.domains.User;
+import com.sagarandcompany.linkSharing.utility.ReadingItemDTO;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,40 +22,48 @@ public class ReadingItemImpl implements ReadingItemRepo {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public ReadingItem save (ReadingItem readingItem) {
-        User user = getSession().get(User.class, User.getLoginUser().getUser_id());
-        Resource resource = getSession().get(Resource.class, readingItem.getResource().getResource_id());
-        readingItem.setUser(user);
+    public ReadingItem save(ReadingItemDTO readingItemDTO) {
+        ReadingItem readingItem = new ReadingItem();
+        Session session = getSession();
+        User user = session.get(User.class, User.getLoginUser().getUser_id());
+        Resource resource = session.get(Resource.class, readingItemDTO.getResource_id());
         readingItem.setResource(resource);
+        readingItem.setUser(user);
+        readingItem.setRead(true);
 
-        /*List<ReadingItem> readingitems=user.getReadingitems();
-        if(readingitems==null)
-        {
-            readingitems =new ArrayList<>();
-
+        List<ReadingItem> readingItems = user.getReadingitems();
+        if (readingItems == null) {
+            readingItems = new ArrayList<>();
         }
+        readingItems.add(readingItem);
 
-        readingitems.add(readingItem);
-        getSession().saveOrUpdate(resource);
+        session.save(user);
         return readingItem;
     }
-*/
 
-       ReadingItem readngitem= (ReadingItem) getSession().save(readingItem);
-        if(readngitem.getReading_item_id()!=null)
-        {
-            return readingItem;
-        }
-        else
-        {
+    public  ReadingItem get(Long id) {
+        if (id != null) {
+            ReadingItem readingItem = getSession().get(ReadingItem.class, id);
+            if (readingItem != null) {
+                return readingItem;
+            } else
+                return null;
+        } else
             return null;
-        }
-
     }
-    private Session getSession()
-    {
 
-        Session session=sessionFactory.getCurrentSession();
+
+    public Boolean delete(Long id)
+    {
+     Session session=getSession();
+     ReadingItem readingItem=session.get(ReadingItem.class,id);
+         session.delete(readingItem);
+         return true;
+     }
+
+    private Session getSession() {
+
+        Session session = sessionFactory.getCurrentSession();
         return session;
     }
 

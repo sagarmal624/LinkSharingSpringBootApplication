@@ -4,6 +4,8 @@ import com.sagarandcompany.linkSharing.domains.Topic;
 import com.sagarandcompany.linkSharing.repository.topicRepository.TopicRepositoryImpl;
 import com.sagarandcompany.linkSharing.repository.userRepository.UserRepositoryImpl;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
+import com.sagarandcompany.linkSharing.utility.TopicVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,53 @@ public class TopicService {
         return responseDTO;
     }
 
+    public ResponseDTO getTopic(Long id) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        TopicVO topicVO = new TopicVO();
+        Topic topic = topicRepositoryImpl.getTopic(id);
+        if (topic != null) {
+            BeanUtils.copyProperties(topic, topicVO);
+            /*topicVO.setTopic_id(topic.getTopic_id());
+            topicVO.setTopic_name(topic.getName());
+            topicVO.setUser_id(topic.getCreatedBy().getUser_id());
+            topicVO.setDateCreated(topic.getDateCreated());
+*/
+            responseDTO.setData(topicVO);
+        } else {
+            responseDTO.setData(null);
+            responseDTO.setMessageAndStatus("Record Not found", false);
+        }
 
+
+        return responseDTO;
+    }
+
+
+    public ResponseDTO getTopicName(String name) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        TopicVO topicVO = new TopicVO();
+        Topic topic = topicRepositoryImpl.getTopicName(name);
+        topicVO.setTopic_id(topic.getTopic_id());
+        topicVO.setTopic_name(topic.getName());
+        responseDTO.setData(topicVO);
+        return responseDTO;
+
+
+    }
+
+
+    public ResponseDTO delete(Long id) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        if (topicRepositoryImpl.delete(id)) {
+            responseDTO.setMessageAndStatus("Record Deleted Successfully", true);
+
+
+        } else {
+            responseDTO.setMessageAndStatus("Something went Wrong", false);
+        }
+
+        return responseDTO;
+    }
 }
 
 

@@ -23,10 +23,18 @@ public class SubscriptionController {
 
     }
 
+
     @GetMapping("/get/{id}")
     @ResponseBody
     public ResponseDTO get(@PathVariable Long id) {
         return subscriptionService.getSubscription(id);
     }
 
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public ResponseDTO deleteSubscription(@PathVariable("id") Long id)
+    {
+        return subscriptionService.delete(id);
+
+    }
 }

@@ -6,12 +6,10 @@ import com.sagarandcompany.linkSharing.utility.ResourceRatingDTO;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+
 
 @Controller
 @RequestMapping("/resourceRating")
@@ -26,6 +24,20 @@ public class ResourceRatingController {
         return resorceRatingService.save(resourceRating);
 
     }
+
+    @GetMapping("get/{id}")
+    @ResponseBody
+    public ResponseDTO getResourcerating(@PathVariable("id") Long id)
+  {
+      return resorceRatingService.get(id);
+
+  }
+     @DeleteMapping("delete/{id}")
+    @ResponseBody
+    public ResponseDTO deleteResourcertng(@PathVariable("id") Long id)
+     {
+         return resorceRatingService.delete(id);
+     }
 
 
 }

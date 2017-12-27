@@ -4,6 +4,7 @@ import com.sagarandcompany.linkSharing.domains.Subscription;
 import com.sagarandcompany.linkSharing.repository.SubscrptnRepository.SubscriptionRepositoryimpl;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import com.sagarandcompany.linkSharing.utility.SubscriptionVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,11 @@ public class SubscriptionService {
         if (subscription != null) {
             responseDTO.setStatus(true);
             SubscriptionVO subscriptionVO = new SubscriptionVO();
-            subscriptionVO.setSubscription_id(subscription.getSubscription_id());
+           /* subscriptionVO.setSubscription_id(subscription.getSubscription_id());
             subscriptionVO.setTopic_id(subscription.getTopic().getTopic_id());
             subscriptionVO.setUser_id(subscription.getUser().getUser_id());
+           */
+            BeanUtils.copyProperties(subscription,subscriptionVO);
             responseDTO.setData(subscriptionVO);
         } else {
             responseDTO.setData(null);
@@ -48,5 +51,21 @@ public class SubscriptionService {
             responseDTO.setMessageAndStatus(error, false);
         }
         return responseDTO;
+    }
+
+    public ResponseDTO delete(Long id)
+    {
+        ResponseDTO responseDTO=new ResponseDTO(false);
+       if(subscriptionRepositoryimpl.delete(id))
+        {
+            responseDTO.setMessageAndStatus("Record Deleted Successfully",true);
+
+        }
+        else
+        {
+            responseDTO.setMessageAndStatus("Something wenr wrong",false);
+        }
+        return responseDTO;
+
     }
 }

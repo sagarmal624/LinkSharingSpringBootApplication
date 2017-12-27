@@ -21,12 +21,27 @@ public class TopicController {
         return topicService.save(topic);
     }
 
-//    @GetMapping("/get/{id}")
-//    @ResponseBody
-//    public Topic getTopics(@PathVariable("id") Long id)
-//    {
-//     return topicService.getTopics(id);
-//
-//    }
 
+    @GetMapping("/get/{id}")
+    @ResponseBody
+    public ResponseDTO get(@PathVariable("id") Long id) {
+        return topicService.getTopic(id);
+
+    }
+
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public ResponseDTO deleteTopic(@PathVariable("id") Long id)
+    {
+       return topicService.delete(id);
+    }
+
+
+    @GetMapping("/getname/{name}")
+    @ResponseBody
+    public ResponseDTO get(@RequestParam("name") String name)
+    {
+        return topicService.getTopicName(name);
+    }
 }

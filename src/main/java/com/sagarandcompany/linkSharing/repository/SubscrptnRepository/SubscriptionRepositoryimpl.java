@@ -3,6 +3,7 @@ package com.sagarandcompany.linkSharing.repository.SubscrptnRepository;
 import com.sagarandcompany.linkSharing.domains.Subscription;
 import com.sagarandcompany.linkSharing.domains.Topic;
 import com.sagarandcompany.linkSharing.domains.User;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,15 @@ public class SubscriptionRepositoryimpl implements SubscriptionRepository {
 */
 
 
+
+       public Boolean delete(Long id)
+       {
+           Session session=getSession();
+          Subscription subscription= session.get(Subscription.class,id);
+              session.delete(subscription);
+              return true;
+
+       }
     private Session getSession() {
 
         Session session = sessionFactory.getCurrentSession();

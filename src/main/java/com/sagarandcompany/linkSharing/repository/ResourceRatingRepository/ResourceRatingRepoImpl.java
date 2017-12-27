@@ -5,6 +5,8 @@ import com.sagarandcompany.linkSharing.domains.Resource;
 import com.sagarandcompany.linkSharing.domains.ResourceRating;
 import com.sagarandcompany.linkSharing.domains.User;
 import com.sagarandcompany.linkSharing.utility.ResourceRatingDTO;
+import com.sagarandcompany.linkSharing.utility.ResponseDTO;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,27 @@ public class ResourceRatingRepoImpl implements ResorceRatingRepo {
 
     }
 
+    public ResourceRating get(Long id)
+    {
+        if(id!=null) {
+            ResourceRating resourceRating = getSession().get(ResourceRating.class, id);
+            if (resourceRating != null) {
+                return resourceRating;
+            } else
+                return null;
+        }
+        else
+            return null;
+    }
 
+     public Boolean delete(Long id)
+     {
+        Session session=getSession();
+        ResourceRating resourceRating=getSession().get(ResourceRating.class,id);
+            session.delete(resourceRating);
+            return true;
+
+     }
     private Session getSession() {
         Session session = sessionFactory.getCurrentSession();
         return session;

@@ -3,6 +3,7 @@ package com.sagarandcompany.linkSharing.repository.ResourceRepository;
 import com.sagarandcompany.linkSharing.domains.Resource;
 import com.sagarandcompany.linkSharing.domains.Topic;
 import com.sagarandcompany.linkSharing.domains.User;
+import com.sun.org.apache.regexp.internal.RE;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,12 @@ public abstract class ResourceRepository {
         resources.add(resource);
         session.save(topic);
         return resource;
+    }
+
+    public Resource get(Long id)
+    {
+       Resource resource= getSession().get(Resource.class,id);
+       return resource;
     }
 
     private Session getSession() {

@@ -4,7 +4,9 @@ import com.sagarandcompany.linkSharing.domains.LinkResource;
 import com.sagarandcompany.linkSharing.domains.Resource;
 import com.sagarandcompany.linkSharing.repository.ResourceRepository.documentResource.DocumentResourceRepositoryImpl;
 import com.sagarandcompany.linkSharing.repository.ResourceRepository.linkResource.LinkResourceRepositoryImpl;
+import com.sagarandcompany.linkSharing.utility.ResourceVO;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,23 @@ public class ResourceService {
         } else {
             responseDTO.setMessageAndStatus(error, false);
         }
+        return responseDTO;
+    }
+
+    public ResponseDTO get(Long id) throws Exception {
+        ResponseDTO responseDTO = new ResponseDTO();
+        ResourceVO resourceVO = new ResourceVO();
+        Resource resource = linkResourceRepository.get(id);
+        if (resource instanceof LinkResource) {
+            BeanUtils.copyProperties(resourceVO, resource);
+        }
+        else
+        {
+            BeanUtils.copyProperties(resourceVO, resource);
+
+        }
+
+        responseDTO.setData(resourceVO);
         return responseDTO;
     }
 }
