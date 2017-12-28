@@ -1,17 +1,14 @@
 package com.sagarandcompany.linkSharing.repository.topicRepository;
 
+import com.sagarandcompany.linkSharing.domains.Subscription;
 import com.sagarandcompany.linkSharing.domains.Topic;
 import com.sagarandcompany.linkSharing.domains.User;
-import com.sagarandcompany.linkSharing.utility.ResponseDTO;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -25,12 +22,25 @@ public class TopicRepositoryImpl implements TopicRepository {
         User user = session.get(User.class, User.getLoginUser().getUser_id());
         topic.setCreatedBy(user);
 
+
         List<Topic> topicList = user.getTopics();
-        if (topicList == null) {
-            topicList = new ArrayList<>();
-        }
         topicList.add(topic);
+
         session.saveOrUpdate(user);
+        session.flush();
+        Subscription subscription = new Subscription();
+        subscription.setTopic(topic);
+        subscription.setUser(user);
+
+        List<Subscription> subscriptions = topic.getSubscriptions();
+        subscriptions.add(subscription);
+        session = getSession();
+        session.saveOrUpdate(topic);
+
+        List<Subscription> userSubscriptions = user.getSubscriptions();
+        userSubscriptions.add(subscription);
+        session.saveOrUpdate(user);
+        session.flush();
         if (topicList.size() == user.getTopics().size())
             return topic;
         else
@@ -49,23 +59,22 @@ public class TopicRepositoryImpl implements TopicRepository {
 
 
     public Boolean delete(Long id) {
-
         Session session = getSession();
+        User user = session.get(User.class, User.getLoginUser().getUser_id());
         Topic topic = session.get(Topic.class, id);
-        /*if (topic != null) {
-            SQLQuery deleteUserTopic = session.createSQLQuery("delete from user_topics where topic_id=" + topic.getTopic_id());
-            deleteUserTopic.executeUpdate();
+        if (topic != null) {
 
-        */
-        session.delete(topic);
+            List<Subscription> subscriptions = user.getSubscriptions();
+            subscriptions.removeIf(it -> it.getTopic().getTopic_id() == topic.getTopic_id() && it.getUser().getUser_id() == user.getUser_id());
 
-        //Query deleteTopicQuery= session.createQuery("delete from Topic where topic_id= '"+topic.getTopic_id()+"' and createdBy='"+user.getUser_id()+"'");
-        // deleteTopicQuery.setParameter("topic", topic);
-        //  deleteTopicQuery.setParameter("user",user);
-//            deleteTopicQuery.executeUpdate();
+            List<Topic> topics = user.getTopics();
+            topics.removeIf(it -> it.getTopic_id() == topic.getTopic_id());
 
-
-        return true;
+            session.saveOrUpdate(user);
+            session.delete(topic);
+            return true;
+        }
+        return false;
     }
 
     public Topic getTopicName(String name) {

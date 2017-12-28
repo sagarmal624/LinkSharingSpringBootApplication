@@ -49,14 +49,21 @@ public class ResourceService {
         Resource resource = linkResourceRepository.get(id);
         if (resource instanceof LinkResource) {
             BeanUtils.copyProperties(resourceVO, resource);
-        }
-        else
-        {
+        } else {
             BeanUtils.copyProperties(resourceVO, resource);
 
         }
 
         responseDTO.setData(resourceVO);
+        return responseDTO;
+    }
+
+    public ResponseDTO delete(Long id) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        if (linkResourceRepository.delete(id)) {
+            responseDTO.setMessageAndStatus("deleted successfullyy", true);
+        } else
+            responseDTO.setMessageAndStatus("resource not found", false);
         return responseDTO;
     }
 }

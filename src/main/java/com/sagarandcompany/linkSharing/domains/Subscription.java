@@ -15,7 +15,6 @@ public class Subscription extends BaseEntity {
     private Topic topic;
     @OneToOne
     @JoinColumn(nullable = false)
-    @JsonIgnore
     private User user;
 
     public Long getSubscription_id() {

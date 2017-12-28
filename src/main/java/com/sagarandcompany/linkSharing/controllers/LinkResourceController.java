@@ -28,4 +28,12 @@ public class LinkResourceController {
         return resourceService.get(id);
 
     }
+
+    @DeleteMapping("delete/{id}")
+    @ResponseBody
+    public ResponseDTO deleteLinkResource(@PathVariable("id") Long id) {
+        return resourceService.delete(id);
+
+    }
+
 }

@@ -19,11 +19,22 @@ public class Topic extends BaseEntity {
 
     private Visibility visibility;
 
-   // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,targetEntity =Resource.class,mappedBy = "topic")
+    //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Resource.class)
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-
     @JoinTable(name = "topic_resource", joinColumns = {@JoinColumn(name = "topic_id")}, inverseJoinColumns = {@JoinColumn(name = "resource_id")})
     private List<Resource> resources = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "topic_subscription", joinColumns = {@JoinColumn(name = "topic_id")}, inverseJoinColumns = {@JoinColumn(name = "subscription_id")})
+    private List<Subscription> subscriptions = new ArrayList<>();
+
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
 
     public List<Resource> getResources() {
         return resources;

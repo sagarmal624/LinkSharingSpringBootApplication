@@ -29,19 +29,16 @@ public class ReadingItemImpl implements ReadingItemRepo {
         Resource resource = session.get(Resource.class, readingItemDTO.getResource_id());
         readingItem.setResource(resource);
         readingItem.setUser(user);
-        readingItem.setRead(true);
+        readingItem.setRead(readingItemDTO.isIs_read());
 
         List<ReadingItem> readingItems = user.getReadingitems();
-        if (readingItems == null) {
-            readingItems = new ArrayList<>();
-        }
         readingItems.add(readingItem);
 
         session.save(user);
         return readingItem;
     }
 
-    public  ReadingItem get(Long id) {
+    public ReadingItem get(Long id) {
         if (id != null) {
             ReadingItem readingItem = getSession().get(ReadingItem.class, id);
             if (readingItem != null) {
@@ -53,13 +50,12 @@ public class ReadingItemImpl implements ReadingItemRepo {
     }
 
 
-    public Boolean delete(Long id)
-    {
-     Session session=getSession();
-     ReadingItem readingItem=session.get(ReadingItem.class,id);
-         session.delete(readingItem);
-         return true;
-     }
+    public Boolean delete(Long id) {
+        Session session = getSession();
+        ReadingItem readingItem = session.get(ReadingItem.class, id);
+        session.delete(readingItem);
+        return true;
+    }
 
     private Session getSession() {
 

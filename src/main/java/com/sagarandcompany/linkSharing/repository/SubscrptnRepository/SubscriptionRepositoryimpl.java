@@ -42,7 +42,7 @@ public class SubscriptionRepositoryimpl implements SubscriptionRepository {
             subscriptions = new ArrayList<>();
         }
         subscriptions.add(subscription);
-        getSession().saveOrUpdate(topic);
+        getSession().saveOrUpdate(user);
         return subscription;
     }
 
