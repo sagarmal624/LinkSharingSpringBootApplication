@@ -21,11 +21,19 @@ public class DocumentResourceController {
         return resourceService.save(resource);
 
     }
+
     @GetMapping("/get/{id}")
     @ResponseBody
     public ResponseDTO getDocumentResource(@PathVariable("id") Long id) throws Exception
 
     {
         return resourceService.get(id);
+    }
+
+    @DeleteMapping("delete/{id}")
+    @ResponseBody
+    public ResponseDTO deleteDocumentResource(@PathVariable("id") Long id) {
+        return resourceService.delete(id);
+
     }
 }
