@@ -1,8 +1,11 @@
 package com.sagarandcompany.linkSharing.repository.topicRepository;
 
+import com.sagarandcompany.linkSharing.domains.Resource;
 import com.sagarandcompany.linkSharing.domains.Subscription;
 import com.sagarandcompany.linkSharing.domains.Topic;
 import com.sagarandcompany.linkSharing.domains.User;
+import com.sagarandcompany.linkSharing.repository.ResourceRepository.ResourceRepository;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +78,19 @@ public class TopicRepositoryImpl implements TopicRepository {
             return true;
         }
         return false;
+    }
+
+    public Boolean removeResourceFromTopic(Resource resource) {
+        Session session = getSession();
+        Topic topic = resource.getTopic();
+        topic.getResources().removeIf(it -> it.getResource_id() == resource.getResource_id());
+        session.save(topic);
+        session.flush();
+        //        SQLQuery sqlQuery = session.createSQLQuery("delete from topic_resource where topic_id=" + resource.getTopic().getTopic_id() + " and resource_id=" + resource.getResource_id());
+//        sqlQuery.executeUpdate();
+//        session.flush();
+
+        return true;
     }
 
     public Topic getTopicName(String name) {

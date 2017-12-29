@@ -41,9 +41,9 @@ public class ResorceRatingService {
          ResourceRating resourceRating=resourceRatingImpl.get(id);
          if(resourceRating!=null) {
              resourceRatingVO.setResource_rating_id(resourceRating.getResource_rating_id());
-             resourceRatingVO.setResource_id(resourceRating.getResource().getResource_id());
+             resourceRatingVO.setResource_id(resourceRating.getResourceId());
              resourceRatingVO.setScore(resourceRating.getScore());
-             resourceRatingVO.setUser_id(resourceRating.getUser().getUser_id());
+             resourceRatingVO.setUser_id(resourceRating.getUserId());
              responseDTO.setData(resourceRatingVO);
 
          }

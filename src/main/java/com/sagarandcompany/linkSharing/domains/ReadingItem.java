@@ -8,7 +8,7 @@ public class ReadingItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "reading_item_id")
     private Long reading_item_id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Resource resource;
     @OneToOne
     private User user;

@@ -1,7 +1,12 @@
 package com.sagarandcompany.linkSharing.repository.ResourceRepository;
 
 import com.sagarandcompany.linkSharing.domains.*;
+import com.sagarandcompany.linkSharing.repository.ReadingItemRepository.ReadingItemImpl;
+import com.sagarandcompany.linkSharing.repository.ResourceRatingRepository.ResourceRatingRepoImpl;
+import com.sagarandcompany.linkSharing.repository.topicRepository.TopicRepositoryImpl;
+import com.sagarandcompany.linkSharing.services.ReadingItemService;
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -14,6 +19,13 @@ import java.util.List;
 public abstract class ResourceRepository {
     @Autowired
     SessionFactory sessionFactory;
+    @Autowired
+    ReadingItemImpl readingItem;
+    @Autowired
+    ResourceRatingRepoImpl resourceRatingRepo;
+
+    @Autowired
+    TopicRepositoryImpl topicRepository;
 
     public Resource save(Resource resource) {
         Session session = getSession();
@@ -35,37 +47,13 @@ public abstract class ResourceRepository {
 
     public Boolean delete(Long id) {
         Session session = getSession();
-
         Resource resource = session.get(Resource.class, id);
         if (resource != null) {
-            Criteria criteria = session.createCriteria(ReadingItem.class);
-            criteria.createAlias("resource", "r");
-            criteria.add(Restrictions.eq("r.resource_id", resource.getResource_id()));
-            if (criteria.list().size() != 0) {
-                ReadingItem readingItem = (ReadingItem) criteria.list().get(0);
-                User user = session.get(User.class, User.getLoginUser().getUser_id());
-
-                List<ReadingItem> readingItems = user.getReadingitems();
-                readingItems.removeIf(it -> it.getReading_item_id() == readingItem.getReading_item_id());
-                session.saveOrUpdate(user);
-                session.delete(readingItem);
-                session.flush();
-                session = getSession();
-            }
-            Criteria criteria2 = session.createCriteria(ResourceRating.class);
-            criteria2.add(Restrictions.eq("resource", resource));
-            if (criteria2.list().size() != 0) {
-                ResourceRating resourceRating = (ResourceRating) criteria2.list().get(0);
-                session.delete(resourceRating);
-                session.flush();
-                session = getSession();
-            }
-            Topic topic = resource.getTopic();
-            List<Resource> resources = topic.getResources();
-            resources.removeIf(it -> it.getResource_id() == resource.getResource_id());
-            session.saveOrUpdate(topic);
+            SQLQuery sqlQuery = session.createSQLQuery("delete from topic_resource where topic_id=" + resource.getTopic().getTopic_id() + " and resource_id=" + resource.getResource_id());
+            sqlQuery.executeUpdate();
+            readingItem.deleteByResource(resource);
+            resourceRatingRepo.deleteByResource(resource);
             session.delete(resource);
-            session.flush();
             return true;
         }
         return false;

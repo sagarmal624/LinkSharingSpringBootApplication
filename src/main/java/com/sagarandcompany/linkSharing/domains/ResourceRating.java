@@ -9,10 +9,8 @@ public class ResourceRating {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "resource_rating_id")
     private Long resource_rating_id;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Resource resource;
-    @OneToOne
-    private User user;
+    private Long resourceId;
+    private Long userId;
     private int score;
 
     public Long getResource_rating_id() {
@@ -23,20 +21,20 @@ public class ResourceRating {
         this.resource_rating_id = resource_rating_id;
     }
 
-    public Resource getResource() {
-        return resource;
+    public Long getResourceId() {
+        return resourceId;
     }
 
-    public void setResource(Resource resource) {
-        this.resource = resource;
+    public void setResourceId(Long resourceId) {
+        this.resourceId = resourceId;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public int getScore() {
@@ -47,13 +45,5 @@ public class ResourceRating {
         this.score = score;
     }
 
-    @Override
-    public String toString() {
-        return "ResourceRating{" +
-                "resource_rating_id=" + resource_rating_id +
-                ", resource=" + resource +
-                ", user=" + user +
-                ", score=" + score +
-                '}';
-    }
+
 }
