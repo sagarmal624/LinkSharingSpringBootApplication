@@ -44,9 +44,6 @@ public class ReadingItemService {
             readingItemVO.setUser_id(readingItem.getUser().getUser_id());
             readingItemVO.setIs_read(readingItem.getRead());
             responseDTO.setData(readingItemVO);
-        } else {
-            responseDTO.setMessageAndStatus("Record not found", false);
-
         }
         return responseDTO;
     }

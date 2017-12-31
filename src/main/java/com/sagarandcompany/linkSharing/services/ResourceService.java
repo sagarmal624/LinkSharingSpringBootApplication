@@ -47,13 +47,7 @@ public class ResourceService {
         ResponseDTO responseDTO = new ResponseDTO();
         ResourceVO resourceVO = new ResourceVO();
         Resource resource = linkResourceRepository.get(id);
-        if (resource instanceof LinkResource) {
-            BeanUtils.copyProperties(resourceVO, resource);
-        } else {
-            BeanUtils.copyProperties(resourceVO, resource);
-
-        }
-
+        BeanUtils.copyProperties(resourceVO, resource);
         responseDTO.setData(resourceVO);
         return responseDTO;
     }

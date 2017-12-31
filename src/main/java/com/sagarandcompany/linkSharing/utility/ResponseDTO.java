@@ -1,9 +1,22 @@
 package com.sagarandcompany.linkSharing.utility;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.http.HttpStatus;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDTO {
     private String message;
-    private Boolean status;
+    private Boolean status = false;
     private Object data;
+    private Integer errorCode;
+
+    public Integer getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(Integer errorCode) {
+        this.errorCode = errorCode;
+    }
 
     public ResponseDTO() {
     }
@@ -49,6 +62,7 @@ public class ResponseDTO {
     }
 
     public Object getData() {
+
         return data;
     }
 

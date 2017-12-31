@@ -32,8 +32,12 @@ public class UserService {
         return responseDTO;
     }
 
-    public User findById(Long id) {
-        return userRepository.findByUser(id);
+    public ResponseDTO findById(Long id) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        User user = userRepository.findByUser(id);
+        if (user != null)
+            responseDTO.setData(user);
+        return responseDTO;
     }
 
     public ResponseDTO delete(Long id) {

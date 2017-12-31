@@ -5,9 +5,18 @@ import java.util.Date;
 public class TopicVO {
 
     private Long topic_id;
-    private String topic_name;
+    private String name;
     private long user_id;
     private Date dateCreated;
+    private Visibility visibility;
+
+    public Visibility getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Visibility visibility) {
+        this.visibility = visibility;
+    }
 
     public Date getDateCreated() {
         return dateCreated;
@@ -25,12 +34,12 @@ public class TopicVO {
         this.topic_id = topic_id;
     }
 
-    public String getTopic_name() {
-        return topic_name;
+    public String getName() {
+        return name;
     }
 
-    public void setTopic_name(String topic_name) {
-        this.topic_name = topic_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getUser_id() {

@@ -35,38 +35,19 @@ public class TopicService {
 
     public ResponseDTO getTopic(Long id) {
         ResponseDTO responseDTO = new ResponseDTO();
-        TopicVO topicVO = new TopicVO();
         Topic topic = topicRepositoryImpl.getTopic(id);
         if (topic != null) {
-            BeanUtils.copyProperties(topic, topicVO);
-            /*topicVO.setTopic_id(topic.getTopic_id());
-            topicVO.setTopic_name(topic.getName());
+            responseDTO.setStatus(true);
+            TopicVO topicVO = new TopicVO();
+            topicVO.setName(topic.getName());
+            topicVO.setTopic_id(topic.getTopic_id());
+            topicVO.setVisibility(topic.getVisibility());
             topicVO.setUser_id(topic.getCreatedBy().getUser_id());
             topicVO.setDateCreated(topic.getDateCreated());
-*/
             responseDTO.setData(topicVO);
-        } else {
-            responseDTO.setData(null);
-            responseDTO.setMessageAndStatus("Record Not found", false);
         }
-
-
         return responseDTO;
     }
-
-
-    public ResponseDTO getTopicName(String name) {
-        ResponseDTO responseDTO = new ResponseDTO();
-        TopicVO topicVO = new TopicVO();
-        Topic topic = topicRepositoryImpl.getTopicName(name);
-        topicVO.setTopic_id(topic.getTopic_id());
-        topicVO.setTopic_name(topic.getName());
-        responseDTO.setData(topicVO);
-        return responseDTO;
-
-
-    }
-
 
     public ResponseDTO delete(Long id) {
         ResponseDTO responseDTO = new ResponseDTO();

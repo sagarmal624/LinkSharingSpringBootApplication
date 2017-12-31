@@ -7,6 +7,7 @@ import com.sagarandcompany.linkSharing.utility.SubscriptionVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,15 +29,8 @@ public class SubscriptionService {
         if (subscription != null) {
             responseDTO.setStatus(true);
             SubscriptionVO subscriptionVO = new SubscriptionVO();
-           /* subscriptionVO.setSubscription_id(subscription.getSubscription_id());
-            subscriptionVO.setTopic_id(subscription.getTopic().getTopic_id());
-            subscriptionVO.setUser_id(subscription.getUser().getUser_id());
-           */
-            BeanUtils.copyProperties(subscription,subscriptionVO);
+            BeanUtils.copyProperties(subscription, subscriptionVO);
             responseDTO.setData(subscriptionVO);
-        } else {
-            responseDTO.setData(null);
-            responseDTO.setMessageAndStatus("Record is not found", false);
         }
         return responseDTO;
     }
@@ -53,17 +47,13 @@ public class SubscriptionService {
         return responseDTO;
     }
 
-    public ResponseDTO delete(Long id)
-    {
-        ResponseDTO responseDTO=new ResponseDTO(false);
-       if(subscriptionRepositoryimpl.delete(id))
-        {
-            responseDTO.setMessageAndStatus("Record Deleted Successfully",true);
+    public ResponseDTO delete(Long id) {
+        ResponseDTO responseDTO = new ResponseDTO(false);
+        if (subscriptionRepositoryimpl.delete(id)) {
+            responseDTO.setMessageAndStatus("Record Deleted Successfully", true);
 
-        }
-        else
-        {
-            responseDTO.setMessageAndStatus("Something wenr wrong",false);
+        } else {
+            responseDTO.setMessageAndStatus("Something wenr wrong", false);
         }
         return responseDTO;
 

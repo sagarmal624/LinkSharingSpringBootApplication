@@ -1,7 +1,9 @@
 package com.sagarandcompany.linkSharing.controllers;
 
 import com.sagarandcompany.linkSharing.domains.User;
+import com.sagarandcompany.linkSharing.exception.RecordNotFoundException;
 import com.sagarandcompany.linkSharing.services.UserService;
+import com.sagarandcompany.linkSharing.utility.LinkSharingKeyword;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +26,11 @@ public class UserController {
 
     @GetMapping("/get/{id}")
     @ResponseBody
-    public User getUser(@PathVariable("id") Long id) {
-        return userService.findById(id);
+    public ResponseDTO getUser(@PathVariable("id") Long id) {
+        ResponseDTO responseDTO = userService.findById(id);
+        if (responseDTO.getData() == null)
+            throw new RecordNotFoundException(LinkSharingKeyword.USER.getValue());
+        return responseDTO;
     }
 
     @DeleteMapping("/delete/{id}")

@@ -2,7 +2,9 @@ package com.sagarandcompany.linkSharing.controllers;
 
 import com.sagarandcompany.linkSharing.domains.DocumentResource;
 import com.sagarandcompany.linkSharing.domains.LinkResource;
+import com.sagarandcompany.linkSharing.exception.RecordNotFoundException;
 import com.sagarandcompany.linkSharing.services.ResourceService;
+import com.sagarandcompany.linkSharing.utility.LinkSharingKeyword;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,10 +26,12 @@ public class DocumentResourceController {
 
     @GetMapping("/get/{id}")
     @ResponseBody
-    public ResponseDTO getDocumentResource(@PathVariable("id") Long id) throws Exception
+    public ResponseDTO getDocumentResource(@PathVariable("id") Long id) throws Exception {
+        ResponseDTO responseDTO = resourceService.get(id);
+        if (responseDTO.getData() == null)
+            throw new RecordNotFoundException(LinkSharingKeyword.DOCUMENT_SHARING_RESOURCE.getValue());
+        return responseDTO;
 
-    {
-        return resourceService.get(id);
     }
 
     @DeleteMapping("delete/{id}")
