@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
     @RequestMapping("/")
     public String home() {
-        return "Link Sharing application  .... created by Indu Mukhi";
+        return "Link Sharing application  is a web based application";
     }
 }
