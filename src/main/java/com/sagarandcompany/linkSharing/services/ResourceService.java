@@ -6,10 +6,13 @@ import com.sagarandcompany.linkSharing.repository.ResourceRepository.documentRes
 import com.sagarandcompany.linkSharing.repository.ResourceRepository.linkResource.LinkResourceRepositoryImpl;
 import com.sagarandcompany.linkSharing.utility.ResourceVO;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
-import org.apache.commons.beanutils.BeanUtils;
+import com.sun.org.apache.regexp.internal.RE;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.InvocationTargetException;
 
 @Service
 public class ResourceService {
@@ -36,6 +39,10 @@ public class ResourceService {
             savedresource = documentResourceRepository.save(resource);
 
         if (savedresource != null) {
+            ResourceVO resourceVO = new ResourceVO();
+            BeanUtils.copyProperties(savedresource, resourceVO);
+
+            responseDTO.setData(resourceVO);
             responseDTO.setMessageAndStatus(success, true);
         } else {
             responseDTO.setMessageAndStatus(error, false);

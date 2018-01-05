@@ -8,6 +8,9 @@ import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.xml.bind.DataBindingException;
 
 @Controller
 @RequestMapping("/topic")
@@ -17,17 +20,26 @@ public class TopicController {
 
     @PostMapping("/save")
     @ResponseBody
-    public ResponseDTO save(@ModelAttribute("topic") Topic topic) {
-        return topicService.save(topic);
+    public ModelAndView save(@ModelAttribute("topic") Topic topic) {
+        ModelAndView modelAndView = new ModelAndView();
+        ResponseDTO responseDTO = topicService.save(topic);
+        modelAndView.addObject("topic", responseDTO.getData());
+        modelAndView.addObject("response", responseDTO);
+        modelAndView.setViewName("home");
+        return modelAndView;
+
+
     }
 
 
     @GetMapping("/get/{id}")
     @ResponseBody
-    public ResponseDTO get(@PathVariable("id") Long id) {
+    public ResponseDTO get(@PathVariable("id") Long id) throws Exception {
         ResponseDTO responseDTO = topicService.getTopic(id);
         if (responseDTO.getData() == null)
             throw new RecordNotFoundException(LinkSharingKeyword.TOPIC.getValue());
+
+
         return responseDTO;
     }
 

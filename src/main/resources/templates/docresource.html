@@ -1,0 +1,51 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="docresource-modal">
+        <div class="modal fade" id="createDocRes" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <form enctype="multipart/form-data" th:action="@{/resource/document/save}" name="resourceForm"
+                          th:object="${resource}" method="post">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="file">File Path:</label>
+                                <input type="file" id="file" th:field="*{file}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <textarea class="form-control" rows="5" id="description"
+                                          th:field="*{description}"></textarea>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Topic:</label>
+                                <select class="form-control" th:field="*{topic.topic_id}">
+                                    <option th:each="topic:${topics}" th:text="${topic.name}"
+                                            th:value="${topic.topic_id}"/>
+                                </select>
+                            </div>
+
+                            <!--<button type="submit" class="btn btn-default">Submit</button>-->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" name="add" id="add" type="submit"
+                                    th:text="AddDocResource"></button>
+
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

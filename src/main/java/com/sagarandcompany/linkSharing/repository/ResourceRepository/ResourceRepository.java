@@ -4,6 +4,7 @@ import com.sagarandcompany.linkSharing.domains.*;
 import com.sagarandcompany.linkSharing.repository.ReadingItemRepository.ReadingItemImpl;
 import com.sagarandcompany.linkSharing.repository.ResourceRatingRepository.ResourceRatingRepoImpl;
 import com.sagarandcompany.linkSharing.repository.topicRepository.TopicRepositoryImpl;
+import com.sagarandcompany.linkSharing.services.CloudnaryService;
 import com.sagarandcompany.linkSharing.services.ReadingItemService;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
@@ -27,6 +28,10 @@ public abstract class ResourceRepository {
     @Autowired
     TopicRepositoryImpl topicRepository;
 
+
+    @Autowired
+    CloudnaryService cloudnaryService;
+
     public Resource save(Resource resource) {
         Session session = getSession();
         Topic topic = session.get(Topic.class, resource.getTopic().getTopic_id());
@@ -35,7 +40,13 @@ public abstract class ResourceRepository {
         resource.setTopic(topic);
 
         List<Resource> resources = topic.getResources();
+
         resources.add(resource);
+        if (resource instanceof DocumentResource) {
+            if (((DocumentResource) resource).getFile().getOriginalFilename() != null) {
+                ((DocumentResource) resource).setFilePath(cloudnaryService.upload(((DocumentResource) resource).getFile()));
+            }
+        }
         session.save(topic);
         return resource;
     }

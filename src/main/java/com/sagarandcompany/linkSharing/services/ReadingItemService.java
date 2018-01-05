@@ -5,10 +5,14 @@ import com.sagarandcompany.linkSharing.repository.ReadingItemRepository.ReadingI
 import com.sagarandcompany.linkSharing.utility.ReadingItemDTO;
 import com.sagarandcompany.linkSharing.utility.ReadingItemVO;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
+import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.Session;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.InvocationTargetException;
 
 @Service
 public class ReadingItemService {
@@ -33,7 +37,7 @@ public class ReadingItemService {
         return responseDTO;
     }
 
-    public ResponseDTO get(Long id) {
+    public ResponseDTO get(Long id) throws InvocationTargetException, IllegalAccessException {
 
         ResponseDTO responseDTO = new ResponseDTO();
         ReadingItem readingItem = readingItemImpl.get(id);
@@ -43,6 +47,8 @@ public class ReadingItemService {
             readingItemVO.setResource_id(readingItem.getResource().getResource_id());
             readingItemVO.setUser_id(readingItem.getUser().getUser_id());
             readingItemVO.setIs_read(readingItem.getRead());
+
+           // BeanUtils.copyProperties(readingItemVO,readingItem);
             responseDTO.setData(readingItemVO);
         }
         return responseDTO;

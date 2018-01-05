@@ -1,0 +1,76 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="registration">
+        <form th:action="@{/user/save}" method="POST" class="form-signin" name="registrationUser" th:object="${user}">
+            <table style="margin:-146px 0px 0px 750px;">
+                <tr>
+                    <th style="color:#007bb5;">Register</th>
+                </tr>
+                <br/><br/>
+                <tr>
+                    <th></th>
+                    <td><span th:if="${response.status}" th:text="${response.message}" class="alert alert-success"/></td>
+
+                </tr>
+                <tr>
+                    <th>First Name<span style="color: red;">*</span></th>
+                    <td><input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter Your fdirst Name"/></td>
+                </tr>
+                <br/>
+
+
+                <tr>
+                    <th>Last Name<span style="color: red;">*</span></th>
+                    <td><input type="text" id="lastName" name="lastName" th:field="*{lastName}" placeholder="Enter Your Last Name"/></td>
+                </tr>
+                <br/>
+
+                <tr>
+                    <th>Email<span style="color: red;">*</span></th>
+                    <td><input type="text" id="email" th:field="*{email}" placeholder="Enter Your Email"/></td>
+                </tr>
+                <br/>
+
+                <tr>
+                    <th>User Name<span style="color: red;">*</span></th>
+                    <td><input type="text" id="regisusername" th:field="*{username}" placeholder="Enter Your UserName"/></td>
+                </tr>
+                <br/>
+                <tr>
+                    <th>Password<span style="color: red;">*</span></th>
+                    <td><input type="text" id="regispassword" th:field="*{password}" placeholder="Enter Your Password"/></td>
+                </tr>
+                <br/>
+                <tr>
+                    <th>Confirm Password<span style="color: red;">*</span></th>
+                    <td><input type="text" id="confirmpassword" name="confirmpassword"
+                               placeholder="Enter Your Confirm Password"/></td>
+                </tr>
+                <br/>
+
+                <tr>
+                    <th>Photo</th>
+                    <td><input type="file" id="file" enctype="multipart/form-data"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-primary" name="register" id="register" type="submit" th:text="Register"></button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="font-size: 15px;color: chocolate;">------------or----------- Sign Up</th>
+                </tr>
+                <tr>
+                    <td><a href="#" class="fa fa-facebook"></a>
+                    </td>
+                    <td><a href="#" class="fa fa-twitter"></a></td>
+
+                    <td><a href="#" class="fa fa-google"></a></td>
+                </tr>
+
+            </table>
+
+        </form>
+
+    </div>
+</div>

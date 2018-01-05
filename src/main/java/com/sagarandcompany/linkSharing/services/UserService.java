@@ -3,6 +3,7 @@ package com.sagarandcompany.linkSharing.services;
 import com.sagarandcompany.linkSharing.domains.User;
 import com.sagarandcompany.linkSharing.repository.userRepository.UserRepositoryImpl;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
+import com.sagarandcompany.linkSharing.utility.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,15 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
         if (savedUser.getUser_id() != null) {
+            UserVO userVO = new UserVO();
+            userVO.setUser_id(user.getUser_id());
+            userVO.setEmail(user.getEmail());
+            userVO.setFirstName(user.getFirstName());
+            userVO.setLastName(user.getLastName());
+            userVO.setUsername(user.getUsername());
+            userVO.setPassword(user.getPassword());
 
+            responseDTO.setData(userVO);
             responseDTO.setMessageAndStatus(success, true);
 
         } else {
@@ -34,9 +43,17 @@ public class UserService {
 
     public ResponseDTO findById(Long id) {
         ResponseDTO responseDTO = new ResponseDTO();
+        UserVO userVO = new UserVO();
         User user = userRepository.findByUser(id);
         if (user != null)
-            responseDTO.setData(user);
+            userVO.setUser_id(user.getUser_id());
+        userVO.setEmail(user.getEmail());
+        userVO.setFirstName(user.getFirstName());
+        userVO.setLastName(user.getLastName());
+        userVO.setUsername(user.getUsername());
+        userVO.setPassword(user.getPassword());
+
+        responseDTO.setData(userVO);
         return responseDTO;
     }
 

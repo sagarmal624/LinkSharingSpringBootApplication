@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title></title>
+    <meta charset="utf-8"/>
+    <div th:replace="header::cssAndJS-header"/>
+
+
+</head>
+<body>
+<div>
+    <div th:replace="header::navbar-header"/>
+    helo this ia home page
+
+</div>
+<div th:replace="topic::topic-modal"/>
+
+<div th:replace="invite::invite-modal"/>
+<div th:replace="linkresource::linkresource-modal"/>
+<div th:replace="docresource::docresource-modal"/>
+</body>
+</html>
+
+

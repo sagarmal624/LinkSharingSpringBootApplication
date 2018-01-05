@@ -3,6 +3,33 @@ package com.sagarandcompany.linkSharing.utility;
 public class ResourceVO {
     private String url;
     private Long resource_id;
+    private String description;
+    private String file;
+    private TopicVO topic;
+
+    public TopicVO getTopic() {
+        return topic;
+    }
+
+    public void setTopic(TopicVO topic) {
+        this.topic = topic;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Long getResource_id() {
         return resource_id;

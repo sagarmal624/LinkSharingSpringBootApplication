@@ -1,14 +1,18 @@
 package com.sagarandcompany.linkSharing.services;
 
 import com.sagarandcompany.linkSharing.domains.Topic;
+import com.sagarandcompany.linkSharing.domains.User;
 import com.sagarandcompany.linkSharing.repository.topicRepository.TopicRepositoryImpl;
 import com.sagarandcompany.linkSharing.repository.userRepository.UserRepositoryImpl;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import com.sagarandcompany.linkSharing.utility.TopicVO;
+import org.hibernate.Session;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TopicService {
@@ -23,9 +27,17 @@ public class TopicService {
     @Value("${linksharing.topic.error}")
     private String error;
 
+    public List<TopicVO> getTopicList() throws Exception {
+        return topicRepositoryImpl.getTopicList();
+    }
+
     public ResponseDTO save(Topic topic) {
         ResponseDTO responseDTO = new ResponseDTO();
-        if (topicRepositoryImpl.save(topic) != null) {
+        Topic savetopic = topicRepositoryImpl.save(topic);
+        if (savetopic != null) {
+            TopicVO topicVO = new TopicVO();
+            BeanUtils.copyProperties(savetopic, topicVO);
+            responseDTO.setData(topicVO);
             responseDTO.setMessageAndStatus(success, true);
         } else {
             responseDTO.setMessageAndStatus(error, false);

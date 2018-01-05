@@ -29,7 +29,10 @@ public class SubscriptionService {
         if (subscription != null) {
             responseDTO.setStatus(true);
             SubscriptionVO subscriptionVO = new SubscriptionVO();
-            BeanUtils.copyProperties(subscription, subscriptionVO);
+            subscriptionVO.setUser_id(subscription.getUser().getUser_id());
+            subscriptionVO.setTopic_id(subscription.getTopic().getTopic_id());
+            subscriptionVO.setSubscription_id(subscription.getSubscription_id());
+            //BeanUtils.copyProperties(subscription, subscriptionVO);
             responseDTO.setData(subscriptionVO);
         }
         return responseDTO;

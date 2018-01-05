@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 @Controller
@@ -25,12 +26,19 @@ public class ReadingItemController {
         return readingItemService.save(readingItemDTO);
     }
 
-    @GetMapping("get/{id}")
+    @GetMapping("/get/{id}")
     @ResponseBody
-    public ResponseDTO getReadingItem(Long id) {
-        ResponseDTO responseDTO = readingItemService.get(id);
-        if (responseDTO.getData() == null)
-            throw new RecordNotFoundException(LinkSharingKeyword.READING_ITEM.getValue());
+    public ResponseDTO get(@PathVariable("id") Long id) {
+        ResponseDTO responseDTO = null;
+        try {
+            responseDTO = readingItemService.get(id);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        //if (responseDTO.getData() == null)
+          //  throw new RecordNotFoundException(LinkSharingKeyword.READING_ITEM.getValue());
         return responseDTO;
     }
 

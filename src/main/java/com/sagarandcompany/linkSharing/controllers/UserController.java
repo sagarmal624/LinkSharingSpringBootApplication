@@ -8,6 +8,7 @@ import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
@@ -20,9 +21,21 @@ public class UserController {
 
     @PostMapping("/save")
     @ResponseBody
-    public ResponseDTO save(@ModelAttribute("user") User user) {
+    public ModelAndView save(@ModelAttribute("user") User user) {
+        ModelAndView modelAndView = new ModelAndView();
+        ResponseDTO responseDTO = userService.save(user);
+        modelAndView.addObject("user", responseDTO.getData());
+        modelAndView.addObject("response", responseDTO);
+        modelAndView.setViewName("login");
+
+        return modelAndView;
+
+    }
+    /*public ResponseDTO save(@ModelAttribute("user") User user)
+    {
         return userService.save(user);
     }
+*/
 
     @GetMapping("/get/{id}")
     @ResponseBody

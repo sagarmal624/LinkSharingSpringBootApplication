@@ -30,8 +30,8 @@ public class LoginService {
         ResponseDTO responseDTO = new ResponseDTO();
         if (sessionUser != null) {
             if (sessionUser.checkUsernameAndPassword(username, password)) {
-               // responseDTO.setMessageAndStatus("User Already logined", true);
-                responseDTO.setMessageAndStatus(message,true);
+                // responseDTO.setMessageAndStatus("User Already logined", true);
+                responseDTO.setMessageAndStatus(message, true);
             } else {
                 responseDTO.setMessageAndStatus(error, false);
             }
@@ -39,8 +39,9 @@ public class LoginService {
             User user = loginRepository.findByUsernameAndPassword(username, password);
             if (user != null) {
                 httpSesssion.setAttribute("user", user);
-               // responseDTO.setMessageAndStatus("User logined", true);
-                responseDTO.setMessageAndStatus(success,true);
+                // responseDTO.setMessageAndStatus("User logined", true);
+                responseDTO.setData(user.getFullname());
+                responseDTO.setMessageAndStatus(success, true);
 
             } else {
                 responseDTO.setMessageAndStatus(error, false);

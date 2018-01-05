@@ -1,0 +1,41 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="topic-modal">
+        <div class="modal fade" id="createTopic" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <form th:action="@{/topic/save}" name="topicForm" th:object="${topic}" method="post">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="name">Topic Name</label>
+                                <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Enter Name"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="visibility">Visibility</label>
+                                <select class="form-control" id="visibility" th:field="*{visibility}">
+                                    <option value="PUBLIC">Public</option>
+                                    <option value="PRIVATE">Private</option>
+                                </select>
+                            </div>
+
+                            <!--<button type="submit" class="btn btn-default">Submit</button>-->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" name="add" id="add" type="submit" th:text="AddTopic"></button>
+
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

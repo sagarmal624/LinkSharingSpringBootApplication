@@ -1,0 +1,31 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+   <div th:fragment="invite-modal">
+       <div class="modal fade" id="sendInv" role="dialog">
+           <div class="modal-dialog">
+               <div class="modal-content">
+                   <form th:action="@{/}" method="post" name="sendInvite">
+                       <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           <h4 class="modal-title">Send Invitation</h4>
+                       </div>
+                       <div class="modal-body">
+                           <div class="form-group">
+                               <label for="email">Email Id</label>
+                               <input type="text" class="form-control"  id="email"
+                                      placeholder="Enter Email"/>
+                           </div>
+                       </div>
+                       <div class="modal-footer">
+                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                           <button class="btn btn-primary" name="sendinvite" id="sendinvite" type="submit" th:text="SendInvitation"></button>
+
+                       </div>
+
+
+
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
