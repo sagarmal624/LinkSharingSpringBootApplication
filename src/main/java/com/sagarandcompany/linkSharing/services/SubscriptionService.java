@@ -4,11 +4,12 @@ import com.sagarandcompany.linkSharing.domains.Subscription;
 import com.sagarandcompany.linkSharing.repository.SubscrptnRepository.SubscriptionRepositoryimpl;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import com.sagarandcompany.linkSharing.utility.SubscriptionVO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 @Service
 public class SubscriptionService {
@@ -22,6 +23,10 @@ public class SubscriptionService {
 
     @Value("${linksharing.subscription.error}")
     private String error;
+
+    public List<SubscriptionVO> getSubscriptions() throws InvocationTargetException, IllegalAccessException {
+        return subscriptionRepositoryimpl.getSubscriptions();
+    }
 
     public ResponseDTO getSubscription(Long id) {
         ResponseDTO responseDTO = new ResponseDTO();

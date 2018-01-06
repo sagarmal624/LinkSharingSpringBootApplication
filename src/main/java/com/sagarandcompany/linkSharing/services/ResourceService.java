@@ -2,6 +2,7 @@ package com.sagarandcompany.linkSharing.services;
 
 import com.sagarandcompany.linkSharing.domains.LinkResource;
 import com.sagarandcompany.linkSharing.domains.Resource;
+import com.sagarandcompany.linkSharing.repository.ResourceRepository.ResourceRepository;
 import com.sagarandcompany.linkSharing.repository.ResourceRepository.documentResource.DocumentResourceRepositoryImpl;
 import com.sagarandcompany.linkSharing.repository.ResourceRepository.linkResource.LinkResourceRepositoryImpl;
 import com.sagarandcompany.linkSharing.utility.ResourceVO;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 @Service
 public class ResourceService {
@@ -28,6 +30,10 @@ public class ResourceService {
 
     @Value("${linksharing.resource.error}")
     private String error;
+
+    public List<ResourceVO> getResources() throws Exception{
+        return ResourceRepository.getResourcesList();
+    }
 
 
     public ResponseDTO save(Resource resource) {

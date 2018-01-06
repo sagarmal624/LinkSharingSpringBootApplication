@@ -1,0 +1,22 @@
+
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="resourcerating">
+    <div class="container">
+    <h2>Inbox</h2>
+    <ul class="list-group">
+
+        <li class="list-group-item" th:utext="${username}"></li>
+        <li   th:each="resource:${topics}" th:text="${topic.name}" class="list-group-item"></li>
+        <li class="list-group-item"><a href="#" class="fa fa-facebook"></a>  </li>
+        <li class="list-group-item"><a href="#" class="fa fa-twitter"></a>  </li>
+        <li class="list-group-item"><a href="#" class="fa fa-google"></a></li>
+
+        </ul>
+
+
+
+
+
+    </div>
+</div>
+</div>

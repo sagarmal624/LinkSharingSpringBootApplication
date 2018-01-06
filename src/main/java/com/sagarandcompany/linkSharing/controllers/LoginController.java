@@ -2,6 +2,8 @@ package com.sagarandcompany.linkSharing.controllers;
 
 import com.sagarandcompany.linkSharing.domains.LinkResource;
 import com.sagarandcompany.linkSharing.services.LoginService;
+import com.sagarandcompany.linkSharing.services.ResourceService;
+import com.sagarandcompany.linkSharing.services.SubscriptionService;
 import com.sagarandcompany.linkSharing.services.TopicService;
 import com.sagarandcompany.linkSharing.utility.ResourceVO;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
@@ -24,6 +26,10 @@ public class LoginController {
 
     @Autowired
     TopicService topicService;
+    @Autowired
+    SubscriptionService subscriptionService;
+    @Autowired
+    ResourceService resourceService;
 
     @PostMapping("/validate")
     @ResponseBody
@@ -33,6 +39,8 @@ public class LoginController {
         if (responseDTO.getStatus()) {
 
             modelAndView.addObject("topics", topicService.getTopicList());
+            modelAndView.addObject("sunscriptions",subscriptionService.getSubscriptions());
+            modelAndView.addObject("resources",resourceService)
             modelAndView.addObject("resource", new ResourceVO());
             modelAndView.addObject("response", new ResponseDTO());
             modelAndView.addObject("username", responseDTO.getData());

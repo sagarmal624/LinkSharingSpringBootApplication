@@ -20,7 +20,6 @@ public class LinkResourceController {
     ResourceService resourceService;
 
     @PostMapping("/save")
-    @ResponseBody
     public ModelAndView save(@ModelAttribute("resource") LinkResource resource) {
         ModelAndView modelAndView = new ModelAndView();
         ResponseDTO responseDTO = resourceService.save(resource);
@@ -29,7 +28,6 @@ public class LinkResourceController {
         modelAndView.addObject("response", responseDTO);
         modelAndView.setViewName("home");
         return modelAndView;
-
 
     }
 

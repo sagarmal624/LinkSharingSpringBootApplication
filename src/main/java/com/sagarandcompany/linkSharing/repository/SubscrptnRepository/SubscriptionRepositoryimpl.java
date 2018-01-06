@@ -3,13 +3,15 @@ package com.sagarandcompany.linkSharing.repository.SubscrptnRepository;
 import com.sagarandcompany.linkSharing.domains.Subscription;
 import com.sagarandcompany.linkSharing.domains.Topic;
 import com.sagarandcompany.linkSharing.domains.User;
-import org.hibernate.Query;
+import com.sagarandcompany.linkSharing.utility.SubscriptionVO;
+import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,20 @@ public class SubscriptionRepositoryimpl implements SubscriptionRepository {
                 return null;
         } else
             return null;
+    }
+
+    public List<SubscriptionVO> getSubscriptions() throws InvocationTargetException, IllegalAccessException {
+        Session session=getSession();
+        User user=session.get(User.class,User.getLoginUser().getUser_id());
+        List<Subscription> subscriptions=user.getSubscriptions();
+        List<SubscriptionVO> subscriptionVOS = new ArrayList<>();
+        for (Subscription subscription:subscriptions) {
+            SubscriptionVO subscriptionVO = new SubscriptionVO();
+            BeanUtils.copyProperties(subscriptionVO, subscription);
+            subscriptionVOS.add(subscriptionVO);
+        }
+        return subscriptionVOS;
+
     }
 
     public Subscription save(Subscription subscription) {

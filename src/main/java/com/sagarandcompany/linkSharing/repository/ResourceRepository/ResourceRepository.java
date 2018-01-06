@@ -6,14 +6,20 @@ import com.sagarandcompany.linkSharing.repository.ResourceRatingRepository.Resou
 import com.sagarandcompany.linkSharing.repository.topicRepository.TopicRepositoryImpl;
 import com.sagarandcompany.linkSharing.services.CloudnaryService;
 import com.sagarandcompany.linkSharing.services.ReadingItemService;
+import com.sagarandcompany.linkSharing.utility.ResourceVO;
+import com.sun.org.apache.regexp.internal.RE;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resources;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -31,6 +37,24 @@ public abstract class ResourceRepository {
 
     @Autowired
     CloudnaryService cloudnaryService;
+
+        public List<ResourceVO> getResourcesList() throws InvocationTargetException, IllegalAccessException {
+            Session session=getSession();
+           User user= session.get(User.class,User.getLoginUser().getUser_id());
+           List<Topic> topic=user.getTopics();
+            List<ResourceVO> resourceVOS = new ArrayList<>();
+           for(Topic topics:topic)
+           {
+               <List<List<ResourceVO>> resources=topics.getResources();
+               ResourceVO resourceVO=new ResourceVO();
+               BeanUtils.copyProperties(resourceVO,resources);
+               resourceVOS.add(resourceVO);
+
+           }
+           return resourceVOS;
+            }
+
+
 
     public Resource save(Resource resource) {
         Session session = getSession();
