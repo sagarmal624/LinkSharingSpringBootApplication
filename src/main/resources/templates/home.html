@@ -12,15 +12,21 @@
 <body>
 <div>
     <div th:replace="header::navbar-header"/>
-    helo this ia home page
+    <div class="row">
+        <div class="col-sm-6">
+            this is left side
+        </div>
+        <div class="col-sm-6">
+            <div th:replace="inbox::unread-item"/>
 
+        </div>
+    </div>
 </div>
 <div th:replace="topic::topic-modal"/>
 
 <div th:replace="invite::invite-modal"/>
 <div th:replace="linkresource::linkresource-modal"/>
 <div th:replace="docresource::docresource-modal"/>
-<div th:replace="resourcerating::resourcerating"/>
 </body>
 </html>
 

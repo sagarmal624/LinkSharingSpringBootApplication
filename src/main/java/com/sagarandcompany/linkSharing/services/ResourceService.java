@@ -31,8 +31,8 @@ public class ResourceService {
     @Value("${linksharing.resource.error}")
     private String error;
 
-    public List<ResourceVO> getResources() throws Exception{
-        return ResourceRepository.getResourcesList();
+    public List<ResourceVO> getResources() {
+        return linkResourceRepository.getResourcesList();
     }
 
 

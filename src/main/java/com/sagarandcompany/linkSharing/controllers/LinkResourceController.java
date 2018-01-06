@@ -19,10 +19,13 @@ public class LinkResourceController {
     @Autowired
     ResourceService resourceService;
 
+
     @PostMapping("/save")
     public ModelAndView save(@ModelAttribute("resource") LinkResource resource) {
         ModelAndView modelAndView = new ModelAndView();
         ResponseDTO responseDTO = resourceService.save(resource);
+        modelAndView.addObject("unreadResources", resourceService.getResources());
+
         modelAndView.addObject("topic", new TopicVO());
         modelAndView.addObject("resource", responseDTO.getData());
         modelAndView.addObject("response", responseDTO);

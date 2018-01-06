@@ -39,8 +39,8 @@ public class LoginController {
         if (responseDTO.getStatus()) {
 
             modelAndView.addObject("topics", topicService.getTopicList());
-            modelAndView.addObject("sunscriptions",subscriptionService.getSubscriptions());
-            modelAndView.addObject("resources",resourceService)
+//            modelAndView.addObject("sunscriptions", subscriptionService.getSubscriptions());
+            modelAndView.addObject("unreadResources", resourceService.getResources());
             modelAndView.addObject("resource", new ResourceVO());
             modelAndView.addObject("response", new ResponseDTO());
             modelAndView.addObject("username", responseDTO.getData());

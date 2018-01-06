@@ -28,6 +28,8 @@ public class DocumentResourceController {
     public ModelAndView save(@ModelAttribute("resource") DocumentResource resource) {
         ModelAndView modelAndView = new ModelAndView();
         ResponseDTO responseDTO = resourceService.save(resource);
+        modelAndView.addObject("unreadResources", resourceService.getResources());
+
         modelAndView.addObject("topic", new TopicVO());
         modelAndView.addObject("resource", responseDTO.getData());
         modelAndView.addObject("response", responseDTO);

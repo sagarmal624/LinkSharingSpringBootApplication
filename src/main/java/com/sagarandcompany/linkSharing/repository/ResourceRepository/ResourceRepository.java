@@ -38,22 +38,30 @@ public abstract class ResourceRepository {
     @Autowired
     CloudnaryService cloudnaryService;
 
-        public List<ResourceVO> getResourcesList() throws InvocationTargetException, IllegalAccessException {
-            Session session=getSession();
-           User user= session.get(User.class,User.getLoginUser().getUser_id());
-           List<Topic> topic=user.getTopics();
-            List<ResourceVO> resourceVOS = new ArrayList<>();
-           for(Topic topics:topic)
-           {
-               <List<List<ResourceVO>> resources=topics.getResources();
-               ResourceVO resourceVO=new ResourceVO();
-               BeanUtils.copyProperties(resourceVO,resources);
-               resourceVOS.add(resourceVO);
-
-           }
-           return resourceVOS;
+    public List<ResourceVO> getResourcesList() {
+        Session session = getSession();
+        User user = session.get(User.class, User.getLoginUser().getUser_id());
+        List<Topic> topics = user.getTopics();
+        List<ResourceVO> resourceVOS = new ArrayList<>();
+        for (Topic topic : topics) {
+            List<Resource> resourceList = topic.getResources();
+            for (Resource resource : resourceList) {
+                ResourceVO resourceVO = new ResourceVO();
+                resourceVO.setResource_id(resource.getResource_id());
+                resourceVO.setDescription(resource.getDescription());
+                resourceVO.setResourceCreatedBy(topic.getCreatedBy().getFullname());
+                if (resource instanceof LinkResource) {
+                    LinkResource linkResource = (LinkResource) resource;
+                    resourceVO.setUrl(linkResource.getUrl());
+                } else {
+                    DocumentResource documentResource = (DocumentResource) resource;
+                    resourceVO.setUrl(documentResource.getFilePath());
+                }
+                resourceVOS.add(resourceVO);
             }
-
+        }
+        return resourceVOS;
+    }
 
 
     public Resource save(Resource resource) {

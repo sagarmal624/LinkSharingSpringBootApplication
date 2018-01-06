@@ -1,0 +1,18 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="unread-item">
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Inbox</div>
+                <div class="panel-body">
+                    <div th:each="resource:${unreadResources}">
+                        <span th:utext="${resource.resourceCreatedBy}"/><br/>
+                        <span th:text="${resource.description}"/>
+                        <br/>
+                    </div>
+                    <br/>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
