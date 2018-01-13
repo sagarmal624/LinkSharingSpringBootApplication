@@ -4,6 +4,7 @@ package com.sagarandcompany.linkSharing.domains;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpSession;
@@ -36,7 +37,16 @@ public class User extends BaseEntity {
     private Boolean active = true;
     @Transient
     private String fullname;
+    @Transient
+    private MultipartFile file;
 
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "user_subscription", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "subscription_id")})

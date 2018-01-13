@@ -31,6 +31,7 @@ public class TopicRepositoryImpl implements TopicRepository {
         List<TopicVO> topicVOS = new ArrayList<>();
         for (Topic topic : topics) {
             TopicVO topicVO = new TopicVO();
+            topicVO.setTopicsize(topics.size());
             BeanUtils.copyProperties(topicVO, topic);
             topicVOS.add(topicVO);
         }

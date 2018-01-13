@@ -1,6 +1,7 @@
 package com.sagarandcompany.linkSharing.repository.userRepository;
 
 import com.sagarandcompany.linkSharing.domains.User;
+import com.sagarandcompany.linkSharing.services.CloudnaryService;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -14,9 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserRepositoryImpl implements UserRepository {
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    CloudnaryService cloudnaryService;
+
 
     public User save(User user) {
         getSession().save(user);
+        return user;
+    }
+
+    public User updateUser(User user) {
+        getSession().saveOrUpdate(user);
         return user;
     }
 

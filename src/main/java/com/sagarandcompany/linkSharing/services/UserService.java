@@ -4,9 +4,12 @@ import com.sagarandcompany.linkSharing.domains.User;
 import com.sagarandcompany.linkSharing.repository.userRepository.UserRepositoryImpl;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import com.sagarandcompany.linkSharing.utility.UserVO;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.InvocationTargetException;
 
 @Service
 public class UserService {
@@ -17,6 +20,9 @@ public class UserService {
 
     @Value("${linksharing.user.error}")
     private String error;
+
+    @Autowired
+    CloudnaryService cloudnaryService;
 
     public ResponseDTO save(User user) {
 
@@ -64,6 +70,35 @@ public class UserService {
             responseDTO.setMessageAndStatus("Deleted Successfully", true);
         } else
             responseDTO.setMessage("Something went wrong");
+        return responseDTO;
+    }
+
+    public ResponseDTO updateuser(User user) throws Exception {
+        ResponseDTO responseDTO = new ResponseDTO();
+        User dbUser = userRepository.findByUser(user.getUser_id());
+        if (user.getFirstName() != null && !("".equals(user.getFirstName()))) {
+            dbUser.setFirstName(user.getFirstName());
+        }
+        if (user.getLastName() != null && !("".equals(user.getLastName()))) {
+            dbUser.setLastName(user.getLastName());
+        }
+        if (user.getUsername() != null && !("".equals(user.getUsername()))) {
+            dbUser.setUsername(user.getUsername());
+        }
+        if (user.getFile() != null) {
+            dbUser.setFilePath(cloudnaryService.upload(user.getFile()));
+        }
+        User userdata = userRepository.updateUser(dbUser);
+        if (userdata.getUser_id() != null) {
+
+            UserVO userVO = new UserVO();
+            BeanUtils.copyProperties(userVO, userdata);
+            responseDTO.setData(userVO);
+            responseDTO.setMessageAndStatus(success, true);
+
+        } else {
+            responseDTO.setMessageAndStatus(error, false);
+        }
         return responseDTO;
     }
 

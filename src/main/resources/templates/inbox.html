@@ -6,10 +6,19 @@
                 <div class="panel-body">
                     <div th:each="resource:${unreadResources}">
                         <span th:utext="${resource.resourceCreatedBy}"/><br/>
-                        <span th:text="${resource.description}"/>
-                        <br/>
+                        <span th:text="${resource.description}"/><br/>
+                        <span><i class="fa fa-facebook"></i></span>
+                        <span><i class="fa fa-twitter"></i></span>
+                        <span><i class="fa fa-google-plus"></i></span>
+                        <span><a href="#"><u>Download</u></a></span>
+                        <span><a href="#"><u>View Full Size</u></a></span>
+                        <span><a href="#"><u>Mark as Read</u></a></span>
+                        <span><a href="#"><u>View Post</u></a></span>
+
+                        <hr/>
+
                     </div>
-                    <br/>
+
 
                 </div>
             </div>

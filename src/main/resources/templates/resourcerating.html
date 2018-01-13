@@ -1,22 +1,21 @@
-
 <div xmlns:th="http://www.w3.org/1999/xhtml">
-    <div th:fragment="resourcerating">
-    <div class="container">
-    <h2>Inbox</h2>
-    <ul class="list-group">
+    <div th:fragment="resourcerating-item">
+        <div class="row">
+            <form th:action="@{/resourceRating/save}" name="resourcertngForm" th:object="${resorcerating}" method="post">
 
-        <li class="list-group-item" th:utext="${username}"></li>
-        <li   th:each="resource:${topics}" th:text="${topic.name}" class="list-group-item"></li>
-        <li class="list-group-item"><a href="#" class="fa fa-facebook"></a>  </li>
-        <li class="list-group-item"><a href="#" class="fa fa-twitter"></a>  </li>
-        <li class="list-group-item"><a href="#" class="fa fa-google"></a></li>
+            <div th:each="resource:${description}"><br/>
+               <span><input id="input-21d" value="2" type="number" class="rating" min=0 max=5 step=0.5 data-size="sm" th:field="{score}"></span>
+                <span><i class="fa fa-facebook"></i></span>
+                <span><i class="fa fa-twitter"></i></span>
+                <span><i class="fa fa-google-plus"></i></span>
+                <span><a href="#"><u>Delete</u></a></span>
+                <span><a href="#"><u>Edit</u></a></span>
+                <span><a href="#"><u>Download</u></a></span>
+                <span><a href="#"><u>View FullSite</u></a></span>
 
-        </ul>
-
-
-
-
-
+            </div>
+            </form>
     </div>
 </div>
 </div>
+

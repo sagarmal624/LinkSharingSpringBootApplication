@@ -6,27 +6,27 @@
     <title></title>
     <meta charset="utf-8"/>
     <div th:replace="header::cssAndJS-header"/>
-
-
 </head>
 <body>
 <div>
     <div th:replace="header::navbar-header"/>
     <div class="row">
         <div class="col-sm-6">
-            this is left side
+            <div th:replace="substntopicsize::substntopisize-item"/>
+            <br/>
+            <div th:replace="subscription::subscription-item"/>
         </div>
         <div class="col-sm-6">
-            <div th:replace="inbox::unread-item"/>
-
+           <div th:replace="inbox::unread-item"/>
         </div>
     </div>
 </div>
 <div th:replace="topic::topic-modal"/>
-
 <div th:replace="invite::invite-modal"/>
 <div th:replace="linkresource::linkresource-modal"/>
 <div th:replace="docresource::docresource-modal"/>
+
+
 </body>
 </html>
 

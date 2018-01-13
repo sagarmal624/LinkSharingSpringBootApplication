@@ -36,10 +36,12 @@ public class SubscriptionRepositoryimpl implements SubscriptionRepository {
         Session session=getSession();
         User user=session.get(User.class,User.getLoginUser().getUser_id());
         List<Subscription> subscriptions=user.getSubscriptions();
+
         List<SubscriptionVO> subscriptionVOS = new ArrayList<>();
         for (Subscription subscription:subscriptions) {
             SubscriptionVO subscriptionVO = new SubscriptionVO();
             BeanUtils.copyProperties(subscriptionVO, subscription);
+            subscriptionVO.setSubsize(subscriptions.size());
             subscriptionVOS.add(subscriptionVO);
         }
         return subscriptionVOS;

@@ -8,19 +8,23 @@
                 <br/><br/>
                 <tr>
                     <th></th>
-                    <td><span th:if="${response.status}" th:text="${response.message}" class="alert alert-success"/></td>
+                    <td>
+                        <!--<span th:if="${response.status}" th:text="${response.message}" class="alert alert-success"/>-->
+                    </td>
 
                 </tr>
                 <tr>
                     <th>First Name<span style="color: red;">*</span></th>
-                    <td><input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter Your fdirst Name"/></td>
+                    <td><input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter Your fdirst Name"/>
+                    </td>
                 </tr>
                 <br/>
 
 
                 <tr>
                     <th>Last Name<span style="color: red;">*</span></th>
-                    <td><input type="text" id="lastName" name="lastName" th:field="*{lastName}" placeholder="Enter Your Last Name"/></td>
+                    <td><input type="text" id="lastName" name="lastName" th:field="*{lastName}"
+                               placeholder="Enter Your Last Name"/></td>
                 </tr>
                 <br/>
 
@@ -32,12 +36,14 @@
 
                 <tr>
                     <th>User Name<span style="color: red;">*</span></th>
-                    <td><input type="text" id="regisusername" th:field="*{username}" placeholder="Enter Your UserName"/></td>
+                    <td><input type="text" id="regisusername" th:field="*{username}" placeholder="Enter Your UserName"/>
+                    </td>
                 </tr>
                 <br/>
                 <tr>
                     <th>Password<span style="color: red;">*</span></th>
-                    <td><input type="text" id="regispassword" th:field="*{password}" placeholder="Enter Your Password"/></td>
+                    <td><input type="text" id="regispassword" th:field="*{password}" placeholder="Enter Your Password"/>
+                    </td>
                 </tr>
                 <br/>
                 <tr>
@@ -53,7 +59,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <button class="btn btn-primary" name="register" id="register" type="submit" th:text="Register"></button>
+                        <button class="btn btn-primary" name="register" id="register" type="submit"
+                                th:text="Register"></button>
                     </td>
                 </tr>
 

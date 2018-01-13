@@ -53,8 +53,7 @@ public class LoginService {
     public ResponseDTO logout(HttpSession httpSession) {
         User sessionUser = (User) httpSession.getAttribute("user");
         ResponseDTO responseDTO = new ResponseDTO();
-        if (sessionUser != null) {
-            httpSession.removeAttribute("user");
+        if (sessionUser != null) {httpSession.removeAttribute("user");
             responseDTO.setMessageAndStatus("User logout successfully", true);
         } else
             responseDTO.setMessageAndStatus("User already logout", false);

@@ -4,6 +4,15 @@ public class SubscriptionVO {
     private Long subscription_id;
     private Long topic_id;
     private Long user_id;
+    private int subsize;
+
+    public int getSubsize() {
+        return subsize;
+    }
+
+    public void setSubsize(int subsize) {
+        this.subsize = subsize;
+    }
 
     public Long getSubscription_id() {
         return subscription_id;

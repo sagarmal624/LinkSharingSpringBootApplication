@@ -8,6 +8,7 @@ import com.sagarandcompany.linkSharing.services.TopicService;
 import com.sagarandcompany.linkSharing.utility.ResourceVO;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
 import com.sagarandcompany.linkSharing.utility.TopicVO;
+import com.sagarandcompany.linkSharing.utility.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,15 +40,21 @@ public class LoginController {
         if (responseDTO.getStatus()) {
 
             modelAndView.addObject("topics", topicService.getTopicList());
-//            modelAndView.addObject("sunscriptions", subscriptionService.getSubscriptions());
+            modelAndView.addObject("subscriptions", subscriptionService.getSubscriptions());
             modelAndView.addObject("unreadResources", resourceService.getResources());
             modelAndView.addObject("resource", new ResourceVO());
             modelAndView.addObject("response", new ResponseDTO());
+            modelAndView.addObject("user", new UserVO());
             modelAndView.addObject("username", responseDTO.getData());
+            modelAndView.addObject("subssize", subscriptionService.getSubscriptions().size());
+            modelAndView.addObject("topicsize", topicService.getTopicList().size());
             modelAndView.addObject("topic", new TopicVO());
             modelAndView.setViewName("home");
+
         } else {
             modelAndView.setViewName("login");
+            modelAndView.addObject("user", new UserVO());
+            modelAndView.addObject("response", new ResponseDTO());
             modelAndView.addObject("error", true);
         }
         return modelAndView;

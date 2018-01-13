@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta charset="utf-8"/>
+    <div th:replace="header::cssAndJS-header"/>
+</head>
+<body>
+<div>
+    <div th:replace="header::navbar-header"/>
+    <div class="row">
+        <div class="col-lg-6"></div>
+        <div class="col-lg-6">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Profile</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <form enctype="multipart/form-data" th:action="@{/user/update}" th:method="post"
+                                  name="userUpdateForm"
+                                  th:object="${user}">
+                                <input type="hidden" th:field="*{user_id}"/>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-lg-3">
+                                            <label for="ename">First Name<span style="color:red">*</span>:</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="fname"
+                                                   placeholder="Enter First Name" th:field="*{firstName}"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-lg-3">
+                                            <label for="lname">Last Name<span style="color:red">*</span>:</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="lname"
+                                                   placeholder="Enter Last Name" th:field="*{lastName}"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-lg-3">
+                                            <label for="ename">User Name<span style="color:red">*</span>:</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="uname"
+                                                   placeholder="Enter User Name" th:field="*{username}"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-lg-3">
+                                            <label for="file">Photo:</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <img th:src="${user.filePath}"/>
+                                            <input type="file" class="form-control" th:field="*{file}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <button type="submit" class="btn btn-info col-lg-offset-7">Update</button>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="panel panel-default" style="border:1px solid gray">
+                    <div class="panel-heading" style="border:1px solid gray">Change Password</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <form enctype="multipart/form-data" th:action="@{/user/update/}" name="userForm"
+                                  th:object="${user}" method="post">
+                                <input type="hidden" th:field="*{user_id}"/>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-lg-3">
+                                            <label for="pwd">Password<span style="color:red">*</span>:</label>
+                                        </div>
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-lg-6">
+                                            <input type="password" class="form-control"
+                                                   placeholder="Enter Password" th:field="*{password}"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-lg-4">
+                                            <label for="cpwd">Confirm Password<span style="color:red">*</span>:</label>
+                                        </div>
+                                        <!--<div class="col-lg-1"></div>-->
+                                        <div class="col-lg-6">
+                                            <input type="password" class="form-control" id="cpwd"
+                                                   placeholder="Enter Confirm Password"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-info col-lg-offset-7">Update</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="topic::topic-modal"/>
+<div th:replace="invite::invite-modal"/>
+<div th:replace="linkresource::linkresource-modal"/>
+<div th:replace="docresource::docresource-modal"/>
+</body>
+</html>
+
+

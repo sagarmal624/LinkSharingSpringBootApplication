@@ -7,6 +7,15 @@ public class UserVO {
     private String lastName;
     private String username;
     private String password;
+    private String filePath;
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 
     public Long getUser_id() {
         return user_id;

@@ -9,6 +9,15 @@ public class TopicVO {
     private long user_id;
     private Date dateCreated;
     private Visibility visibility;
+    private int Topicsize;
+
+    public int getTopicsize() {
+        return Topicsize;
+    }
+
+    public void setTopicsize(int topicsize) {
+        Topicsize = topicsize;
+    }
 
     public Visibility getVisibility() {
         return visibility;
