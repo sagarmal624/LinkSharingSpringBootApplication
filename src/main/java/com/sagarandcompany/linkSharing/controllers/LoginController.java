@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/login")
 @CrossOrigin
-public class LoginController {
+public class LoginController extends BaseController {
 
     @Autowired
     LoginService loginService;
@@ -35,27 +35,17 @@ public class LoginController {
     @PostMapping("/validate")
     @ResponseBody
     public ModelAndView validate(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession httpSesssion) throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = null;
         ResponseDTO responseDTO = loginService.validate(username, password, httpSesssion);
         if (responseDTO.getStatus()) {
-
-            modelAndView.addObject("topics", topicService.getTopicList());
-            modelAndView.addObject("subscriptions", subscriptionService.getSubscriptions());
+            modelAndView = getModalAndView("home");
             modelAndView.addObject("unreadResources", resourceService.getResources());
-            modelAndView.addObject("resource", new ResourceVO());
-            modelAndView.addObject("response", new ResponseDTO());
-            modelAndView.addObject("user", new UserVO());
-            modelAndView.addObject("username", responseDTO.getData());
-            modelAndView.addObject("subssize", subscriptionService.getSubscriptions().size());
-            modelAndView.addObject("topicsize", topicService.getTopicList().size());
-            modelAndView.addObject("topic", new TopicVO());
-            modelAndView.setViewName("home");
 
         } else {
+            modelAndView = new ModelAndView();
             modelAndView.setViewName("login");
             modelAndView.addObject("user", new UserVO());
-            modelAndView.addObject("response", new ResponseDTO());
-            modelAndView.addObject("error", true);
+            modelAndView.addObject("response", responseDTO);
         }
         return modelAndView;
     }

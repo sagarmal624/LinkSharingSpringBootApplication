@@ -37,7 +37,6 @@ public class SubscriptionService {
             subscriptionVO.setUser_id(subscription.getUser().getUser_id());
             subscriptionVO.setTopic_id(subscription.getTopic().getTopic_id());
             subscriptionVO.setSubscription_id(subscription.getSubscription_id());
-            //BeanUtils.copyProperties(subscription, subscriptionVO);
             responseDTO.setData(subscriptionVO);
         }
         return responseDTO;
@@ -58,10 +57,10 @@ public class SubscriptionService {
     public ResponseDTO delete(Long id) {
         ResponseDTO responseDTO = new ResponseDTO(false);
         if (subscriptionRepositoryimpl.delete(id)) {
-            responseDTO.setMessageAndStatus("Record Deleted Successfully", true);
+            responseDTO.setMessageAndStatus("UnSubscribed Successfully", true);
 
         } else {
-            responseDTO.setMessageAndStatus("Something wenr wrong", false);
+            responseDTO.setMessageAndStatus("Something went wrong", false);
         }
         return responseDTO;
 

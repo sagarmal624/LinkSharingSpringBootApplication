@@ -16,7 +16,7 @@ import javax.xml.bind.DataBindingException;
 @RestController
 public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
-   // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public final ResponseDTO handleAllExceptions(Exception ex, WebRequest request) {
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setStatus(false);
@@ -30,7 +30,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     public final ResponseDTO handleUserNotFoundException(RecordNotFoundException ex, WebRequest request) {
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setStatus(false);
-       // responseDTO.setErrorCode(HttpStatus.NOT_FOUND.value());
+        // responseDTO.setErrorCode(HttpStatus.NOT_FOUND.value());
         responseDTO.setMessage(ex.getMessage() + " " + HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase() + "  With " + request.getDescription(false));
         return responseDTO;
     }

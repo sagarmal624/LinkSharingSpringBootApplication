@@ -1,6 +1,7 @@
 package com.sagarandcompany.linkSharing.domains;
 
 
+import com.sagarandcompany.linkSharing.utility.UserVO;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -171,10 +172,10 @@ public class User extends BaseEntity {
         return username.equals(getUsername()) && password.equals(getPassword());
     }
 
-    public static User getLoginUser() {
+    public static UserVO getLoginUser() {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attr.getRequest().getSession(true);
-        return (User) session.getAttribute("user");
+        return (UserVO) session.getAttribute("user");
     }
 
     @Override

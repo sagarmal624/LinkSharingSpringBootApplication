@@ -18,22 +18,22 @@ import java.lang.reflect.InvocationTargetException;
 
 @Controller
 @RequestMapping("/resource/document")
-public class DocumentResourceController {
+public class DocumentResourceController extends BaseController {
 
     @Autowired
     ResourceService resourceService;
 
     @PostMapping("/save")
     @ResponseBody
-    public ModelAndView save(@ModelAttribute("resource") DocumentResource resource) {
-        ModelAndView modelAndView = new ModelAndView();
-        ResponseDTO responseDTO = resourceService.save(resource);
-        modelAndView.addObject("unreadResources", resourceService.getResources());
-
-        modelAndView.addObject("topic", new TopicVO());
-        modelAndView.addObject("resource", responseDTO.getData());
-        modelAndView.addObject("response", responseDTO);
-        modelAndView.setViewName("home");
+    public ModelAndView save(@ModelAttribute("resource") DocumentResource resource) throws Exception {
+        ModelAndView modelAndView = getModalAndView("home");
+        if (resource.getTopic() != null && resource.getFile() != null) {
+            ResponseDTO responseDTO = resourceService.save(resource);
+            modelAndView.addObject("unreadResources", resourceService.getResources());
+            modelAndView.addObject("resource", responseDTO.getData());
+            modelAndView.addObject("response", responseDTO);
+        } else
+            modelAndView.addObject("response", new ResponseDTO("Something went wrong", false, null));
         return modelAndView;
     }
 

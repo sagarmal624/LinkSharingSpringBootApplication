@@ -5,9 +5,11 @@ import com.sagarandcompany.linkSharing.domains.Topic;
 import com.sagarandcompany.linkSharing.domains.User;
 import com.sagarandcompany.linkSharing.utility.SubscriptionVO;
 import org.apache.commons.beanutils.BeanUtils;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,12 +35,12 @@ public class SubscriptionRepositoryimpl implements SubscriptionRepository {
     }
 
     public List<SubscriptionVO> getSubscriptions() throws InvocationTargetException, IllegalAccessException {
-        Session session=getSession();
-        User user=session.get(User.class,User.getLoginUser().getUser_id());
-        List<Subscription> subscriptions=user.getSubscriptions();
+        Session session = getSession();
+        User user = session.get(User.class, User.getLoginUser().getUser_id());
+        List<Subscription> subscriptions = user.getSubscriptions();
 
         List<SubscriptionVO> subscriptionVOS = new ArrayList<>();
-        for (Subscription subscription:subscriptions) {
+        for (Subscription subscription : subscriptions) {
             SubscriptionVO subscriptionVO = new SubscriptionVO();
             BeanUtils.copyProperties(subscriptionVO, subscription);
             subscriptionVO.setSubsize(subscriptions.size());
@@ -64,28 +66,19 @@ public class SubscriptionRepositoryimpl implements SubscriptionRepository {
         return subscription;
     }
 
-       /*getSession().save(subscription);
-       if(subscription.getSubscription_id()!=null)
 
-       {
-           return subscription;
-       }
-       else
-           return null;
+    public Boolean delete(Long id) {
+        Session session = getSession();
+        Subscription subscription = session.get(Subscription.class, id);
+        SQLQuery sqlQuery = session.createSQLQuery("delete from user_subscription where user_id=" + subscription.getUser().getUser_id() + " and subscription_id=" + id);
+        sqlQuery.executeUpdate();
+        sqlQuery = session.createSQLQuery("delete from topic_subscription where topic_id=" + subscription.getTopic().getTopic_id() + " and subscription_id=" + id);
+        sqlQuery.executeUpdate();
+        session.delete(subscription);
+        session.flush();
+        return true;
     }
 
-*/
-
-
-
-       public Boolean delete(Long id)
-       {
-           Session session=getSession();
-          Subscription subscription= session.get(Subscription.class,id);
-              session.delete(subscription);
-              return true;
-
-       }
     private Session getSession() {
 
         Session session = sessionFactory.getCurrentSession();

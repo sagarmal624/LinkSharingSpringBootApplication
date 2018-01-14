@@ -31,6 +31,10 @@ public class TopicService {
         return topicRepositoryImpl.getTopicList();
     }
 
+    public List<TopicVO> getTrendingTopicList() throws Exception {
+        return topicRepositoryImpl.getTrendingTopicList();
+    }
+
     public ResponseDTO save(Topic topic) {
         ResponseDTO responseDTO = new ResponseDTO();
         Topic savetopic = topicRepositoryImpl.save(topic);

@@ -9,7 +9,61 @@ public class TopicVO {
     private long user_id;
     private Date dateCreated;
     private Visibility visibility;
+    private Seriousness seriousness;
     private int Topicsize;
+    private UserVO createdBy;
+    private Integer subscriptionCount;
+    private Integer postCount;
+    private Boolean isSubscribed;
+    private Long subscriptionId;
+
+    public Long getSubscriptionId() {
+        return subscriptionId;
+    }
+
+    public void setSubscriptionId(Long subscriptionId) {
+        this.subscriptionId = subscriptionId;
+    }
+
+    public Boolean getSubscribed() {
+        return isSubscribed;
+    }
+
+    public void setSubscribed(Boolean subscribed) {
+        isSubscribed = subscribed;
+    }
+
+    public Seriousness getSeriousness() {
+        return seriousness;
+    }
+
+    public void setSeriousness(Seriousness seriousness) {
+        this.seriousness = seriousness;
+    }
+
+    public Integer getSubscriptionCount() {
+        return subscriptionCount;
+    }
+
+    public void setSubscriptionCount(Integer subscriptionCount) {
+        this.subscriptionCount = subscriptionCount;
+    }
+
+    public Integer getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(Integer postCount) {
+        this.postCount = postCount;
+    }
+
+    public UserVO getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(UserVO createdBy) {
+        this.createdBy = createdBy;
+    }
 
     public int getTopicsize() {
         return Topicsize;

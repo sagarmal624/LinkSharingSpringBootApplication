@@ -1,65 +1,78 @@
 <div xmlns:th="http://www.w3.org/1999/xhtml">
     <div th:fragment="subscription-item">
 
-    <div class="panel panel-default" style="border:1px solid gray;border-radius:10px">
-    <div class="panel-heading"  style="border:1px solid gray;border-radius:5px">
+        <div class="panel panel-default" style="border:1px solid gray;border-radius:10px">
+            <div class="panel-heading" style="border:1px solid gray;border-radius:5px">
                         <span>
-                        Subscriptions
+                        Trending Topics
                         </span>
-        <span  class="col-lg-offset-5"><a href="#"><u>View All</u></a></span>
-    </div>
-    <div class="panel-body">
-        <div th:each="topic:${topics}">
-            <span th:text="${topic.name}"/><br/>
-            <span class="text-muted">
+                <span class="col-lg-offset-5"><a href="#"><u>View All</u></a></span>
+            </div>
+            <div class="panel-body panel-scroll">
+                <div th:each="topic:${trendingTopics}">
+                    <fieldset>
+                        <legend th:text="${topic.name}"></legend>
+                        <img class="user-img" th:src="${topic.createdBy.filePath}"/>
+
+                        <span class="text-muted">
                                  <div class="row">
                                     <div class="col-lg-5"></div>
                                     <div class="col-lg-3">Subscriptions</div>
                                     <div class="col-lg-2">Post</div>
                                  </div>
                               </span>
-            <br/>
-            <div class="row">
-                <div class="col-lg-5">
-                    <span><a href="#">Unsubscribe</a></span>
-                </div>
-                <div class="col-lg-3">
-                    <span class="badge" style="color:aqua">50</span>
-                </div>
-                <div class="col-lg-2">
-                    <span class="badge" style="color:aqua">50</span>
-                </div>
-            </div>
-            <br/><br/>
-            <div class="row" style="padding-bottom:10px">
-                <div class="col-lg-4">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <span>
+                                    <a href="#" class="subscribeLink" th:value="${topic.topic_id}"
+                                       th:if="${!topic.subscribed}">Subscribe</a>
+                                    <a href="#" th:if="${topic.subscribed}" class="subscribeLink"
+                                       th:value="${topic.subscriptionId}">Unsubscribe</a>
+                                </span>
+                            </div>
+                            <div class="col-lg-3">
+                                <span class="badge" th:text="${topic.subscriptionCount}" style="color:aqua"></span>
+                            </div>
+                            <div class="col-lg-2">
+                                <span class="badge" th:text="${topic.postCount}" style="color:aqua"></span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row" style="padding-bottom:10px">
+                            <div class="col-lg-4">
                                  <span class="col-lg-12">
-                                    <select class="form-control" style="font-size:11px">
-                                       <option>Serious</option>
-                                       <option>Non Serious</option>
+                                    <select class="form-control" style="font-size:11px"
+                                            th:name="seriousness+${topic.topic_id}">
+                                       <option th:each="seriousness:${seriousnessValues}" th:value="${seriousness}"
+                                               th:text="${seriousness.value}"
+                                               th:selected="${topic.seriousness==seriousness}?'true':false"/>
                                     </select>
                                  </span>
-                </div>
-                <div class="col-lg-4">
-                    <select class="form-control" style="font-size:11px"
-                            data-placement="top" data-toggle="tooltip" title="Delete,edit and private will show to topic creater and admin">
-                        <option>Private</option>
-                        <option>Public</option>
-                    </select>
-                </div>
-                <div class="col-lg-4">
-                    <span class="glyphicon glyphicon-envelope" style="font-size:25px"></span>
-                    <span class="glyphicon glyphicon-file"></span>
-                    <span class="glyphicon glyphicon-trash" style="font-size:25px" ></span>
+                            </div>
+                            <div class="col-lg-4" th:if="${user.username==topic.createdBy.username}">
+                                <select class="form-control" style="font-size:11px"
+                                        name="visibility"
+                                        data-placement="top" data-toggle="tooltip"
+                                        title="Delete,edit and private will show to topic creater and admin">
+                                    <option th:each="visibility:${visibilities}" th:value="${visibility}"
+                                            th:text="${visibility.value}"
+                                            th:selected="${topic.visibility==visibility}?'true':'false'"
+                                    />
+
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <span class="glyphicon glyphicon-envelope" style="font-size:25px"></span>
+                                <span class="glyphicon glyphicon-file" style="font-size:25px"
+                                      th:if="${user.username==topic.createdBy.username}"></span>
+                                <span class="glyphicon glyphicon-trash"
+                                      th:if="${user.username==topic.createdBy.username}" style="font-size:25px"></span>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
-            <br/>
-            <hr/>
-        </div>
-        <br/>
-
         </div>
     </div>
 </div>
-    </div>
 

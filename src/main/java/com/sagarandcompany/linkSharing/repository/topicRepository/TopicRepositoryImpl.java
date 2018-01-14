@@ -4,12 +4,16 @@ import com.sagarandcompany.linkSharing.domains.Resource;
 import com.sagarandcompany.linkSharing.domains.Subscription;
 import com.sagarandcompany.linkSharing.domains.Topic;
 import com.sagarandcompany.linkSharing.domains.User;
-import com.sagarandcompany.linkSharing.repository.ResourceRepository.ResourceRepository;
+import com.sagarandcompany.linkSharing.utility.Seriousness;
 import com.sagarandcompany.linkSharing.utility.TopicVO;
-import org.apache.commons.beanutils.BeanUtils;
-import org.hibernate.SQLQuery;
+import com.sagarandcompany.linkSharing.utility.UserVO;
+//import org.apache.commons.beanutils.BeanUtils;
+import com.sagarandcompany.linkSharing.utility.Visibility;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,18 +28,52 @@ public class TopicRepositoryImpl implements TopicRepository {
     @Autowired
     private SessionFactory sessionFactory;
 
+    public List<TopicVO> getTopics(List<Topic> topics)
+
+    {
+        Session session = getSession();
+        User user = session.get(User.class, User.getLoginUser().getUser_id());
+
+        List<TopicVO> topicVOS = new ArrayList<>();
+        for (Topic topic : topics) {
+            TopicVO topicVO = new TopicVO();
+            UserVO userVO = new UserVO();
+            topicVO.setTopicsize(topics.size());
+            BeanUtils.copyProperties(topic, topicVO, "createdBy");
+            BeanUtils.copyProperties(topic.getCreatedBy(), userVO);
+            topicVO.setCreatedBy(userVO);
+            topicVO.setSubscriptionCount(topic.getSubscriptions().size());
+            topicVO.setPostCount(topic.getResources().size());
+            Criteria criteria = session.createCriteria(Subscription.class);
+            criteria.add(Restrictions.eq("user", user));
+            criteria.add(Restrictions.eq("topic", topic));
+            List<Subscription> subscriptions = criteria.list();
+            if (subscriptions.size() != 0) {
+                topicVO.setSeriousness(subscriptions.get(0).getSeriousness());
+                topicVO.setSubscribed(true);
+                topicVO.setSubscriptionId(subscriptions.get(0).getSubscription_id());
+            } else
+                topicVO.setSubscribed(false);
+
+            topicVOS.add(topicVO);
+        }
+        return topicVOS;
+    }
+
     public List<TopicVO> getTopicList() throws InvocationTargetException, IllegalAccessException {
         Session session = getSession();
         User user = session.get(User.class, User.getLoginUser().getUser_id());
         List<Topic> topics = user.getTopics();
-        List<TopicVO> topicVOS = new ArrayList<>();
-        for (Topic topic : topics) {
-            TopicVO topicVO = new TopicVO();
-            topicVO.setTopicsize(topics.size());
-            BeanUtils.copyProperties(topicVO, topic);
-            topicVOS.add(topicVO);
-        }
-        return topicVOS;
+        return getTopics(topics);
+    }
+
+    public List<TopicVO> getTrendingTopicList() throws InvocationTargetException, IllegalAccessException {
+        Session session = getSession();
+        User user = session.get(User.class, User.getLoginUser().getUser_id());
+        Criteria criteria = session.createCriteria(Topic.class);
+        criteria.add(Restrictions.eq("visibility", Visibility.PUBLIC));
+        List<Topic> topics = (List<Topic>) criteria.list();
+        return getTopics(topics);
     }
 
     public Topic save(Topic topic) {
@@ -48,6 +86,7 @@ public class TopicRepositoryImpl implements TopicRepository {
         session.saveOrUpdate(user);
         session.flush();
         Subscription subscription = new Subscription();
+        subscription.setSeriousness(Seriousness.SERIOUS);
         subscription.setTopic(topic);
         subscription.setUser(user);
 

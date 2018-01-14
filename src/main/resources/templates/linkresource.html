@@ -3,39 +3,64 @@
         <div class="modal fade" id="createlinkRes" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form th:action="@{/resource/link/save}" th:object="${resource}" method="post" name="linkForm">
+                    <form class="form-horizontal" role="form" th:action="@{/resource/link/save}" th:object="${resource}"
+                          method="post" name="linkForm">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Create Link Resource</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label for="link">Link</label>
-                                <input type="text" class="form-control" id="link" placeholder="Enter Link" th:field="*{url}"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description:</label>
-                            <textarea class="form-control" rows="5"  id="description"
-                                      th:field="*{description}"></textarea>
-                        </div>
+                            <fieldset>
 
-                        <div class="form-group">
-                            <label for="description">Topic:</label>
-                            <select class="form-control" th:field="*{topic.topic_id}">
-                                <option th:each="topic:${topics}" th:text="${topic.name}" th:value="${topic.topic_id}"/>
-                            </select>
-                        </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Link</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="link" placeholder="Enter Link"
+                                               th:field="*{url}"/>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" name="addlink" id="addlink" type="submit"
-                                    th:text="AddLinkResource"></button>
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Description</label>
+                                    <div class="col-sm-10">
+                      <textarea class="form-control" rows="5" id="description"
+                                th:field="*{description}"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Topic</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" th:field="*{topic.topic_id}">
+                                            <option th:each="topic:${topics}" th:text="${topic.name}"
+                                                    th:value="${topic.topic_id}"/>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                            <button class="btn btn-primary" name="addlink" id="addlink" type="submit"
+                                                    th:text="AddLinkResource"></button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
 
                         </div>
 
 
                     </form>
+
                 </div>
             </div>
         </div>

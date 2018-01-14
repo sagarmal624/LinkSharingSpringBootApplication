@@ -3,6 +3,8 @@ package com.sagarandcompany.linkSharing.services;
 import com.sagarandcompany.linkSharing.domains.User;
 import com.sagarandcompany.linkSharing.repository.loginRepository.LoginRepository;
 import com.sagarandcompany.linkSharing.utility.ResponseDTO;
+import com.sagarandcompany.linkSharing.utility.UserVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,6 @@ public class LoginService {
         ResponseDTO responseDTO = new ResponseDTO();
         if (sessionUser != null) {
             if (sessionUser.checkUsernameAndPassword(username, password)) {
-                // responseDTO.setMessageAndStatus("User Already logined", true);
                 responseDTO.setMessageAndStatus(message, true);
             } else {
                 responseDTO.setMessageAndStatus(error, false);
@@ -38,8 +39,11 @@ public class LoginService {
         } else {
             User user = loginRepository.findByUsernameAndPassword(username, password);
             if (user != null) {
-                httpSesssion.setAttribute("user", user);
-                // responseDTO.setMessageAndStatus("User logined", true);
+                UserVO userVO = new UserVO();
+                BeanUtils.copyProperties(user, userVO);
+                userVO.setTopicCount(user.getTopics().size());
+                userVO.setSubscriptionCount(user.getSubscriptions().size());
+                httpSesssion.setAttribute("user", userVO);
                 responseDTO.setData(user.getFullname());
                 responseDTO.setMessageAndStatus(success, true);
 
@@ -51,9 +55,10 @@ public class LoginService {
     }
 
     public ResponseDTO logout(HttpSession httpSession) {
-        User sessionUser = (User) httpSession.getAttribute("user");
+        UserVO sessionUser = (UserVO) httpSession.getAttribute("user");
         ResponseDTO responseDTO = new ResponseDTO();
-        if (sessionUser != null) {httpSession.removeAttribute("user");
+        if (sessionUser != null) {
+            httpSession.removeAttribute("user");
             responseDTO.setMessageAndStatus("User logout successfully", true);
         } else
             responseDTO.setMessageAndStatus("User already logout", false);

@@ -1,5 +1,7 @@
 package com.sagarandcompany.linkSharing.utility;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class UserVO {
     private Long user_id;
     private String email;
@@ -8,6 +10,42 @@ public class UserVO {
     private String username;
     private String password;
     private String filePath;
+    private Integer subscriptionCount;
+    private Integer postCount;
+    private Integer topicCount;
+    private MultipartFile file;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    public Integer getSubscriptionCount() {
+        return subscriptionCount;
+    }
+
+    public void setSubscriptionCount(Integer subscriptionCount) {
+        this.subscriptionCount = subscriptionCount;
+    }
+
+    public Integer getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(Integer postCount) {
+        this.postCount = postCount;
+    }
+
+    public Integer getTopicCount() {
+        return topicCount;
+    }
+
+    public void setTopicCount(Integer topicCount) {
+        this.topicCount = topicCount;
+    }
 
     public String getFilePath() {
         return filePath;

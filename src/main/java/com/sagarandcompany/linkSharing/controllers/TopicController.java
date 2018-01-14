@@ -14,21 +14,18 @@ import javax.xml.bind.DataBindingException;
 
 @Controller
 @RequestMapping("/topic")
-public class TopicController {
+public class TopicController extends BaseController {
     @Autowired
     TopicService topicService;
 
     @PostMapping("/save")
     @ResponseBody
-    public ModelAndView save(@ModelAttribute("topic") Topic topic) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView save(@ModelAttribute("topic") Topic topic) throws Exception {
+        ModelAndView modelAndView = getModalAndView("home");
         ResponseDTO responseDTO = topicService.save(topic);
         modelAndView.addObject("topic", responseDTO.getData());
         modelAndView.addObject("response", responseDTO);
-        modelAndView.setViewName("home");
         return modelAndView;
-
-
     }
 
 

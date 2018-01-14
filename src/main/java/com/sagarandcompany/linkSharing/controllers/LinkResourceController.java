@@ -14,24 +14,24 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/resource/link")
-public class LinkResourceController {
+public class LinkResourceController extends BaseController {
 
     @Autowired
     ResourceService resourceService;
 
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute("resource") LinkResource resource) {
-        ModelAndView modelAndView = new ModelAndView();
-        ResponseDTO responseDTO = resourceService.save(resource);
-        modelAndView.addObject("unreadResources", resourceService.getResources());
+    public ModelAndView save(@ModelAttribute("resource") LinkResource resource) throws Exception {
+        ModelAndView modelAndView = getModalAndView("home");
+        if (resource.getTopic() != null && resource.getUrl() != null) {
+            ResponseDTO responseDTO = resourceService.save(resource);
+            modelAndView.addObject("unreadResources", resourceService.getResources());
+            modelAndView.addObject("resource", responseDTO.getData());
+            modelAndView.addObject("response", responseDTO);
+        } else
+            modelAndView.addObject("response", new ResponseDTO("Something went wrong", false, null));
 
-        modelAndView.addObject("topic", new TopicVO());
-        modelAndView.addObject("resource", responseDTO.getData());
-        modelAndView.addObject("response", responseDTO);
-        modelAndView.setViewName("home");
         return modelAndView;
-
     }
 
     @GetMapping("get/{id}")

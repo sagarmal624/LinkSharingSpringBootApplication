@@ -10,6 +10,10 @@ public enum Visibility {
 
     private String value;
 
+    public String getValue() {
+        return value;
+    }
+
     public Visibility getValue(String name) {
         return Visibility.valueOf(name);
     }

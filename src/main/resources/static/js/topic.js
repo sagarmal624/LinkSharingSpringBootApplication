@@ -1,20 +1,53 @@
-$(document).ready(function(){
-      $("form[name='topicForm']").validate({
-          rules:{
-              name:{required:true},
+$(document).ready(function () {
+    $(".subscribeLink").on("click", function (e) {
+        e.preventDefault();
+        var topicId = $(this).attr('value');
+        if ($(this).text() == "Subscribe") {
+            $.post("/subscription/save", {
+                "topic.topic_id": topicId,
+                "seriousness": $("[name='seriousness" + topicId + "']").val()
+            }, function (response) {
+                if (response.status) {
+                    $(".myAlert-top").addClass("alert-success").removeClass("alert-danger");
+                    $(".myAlert-top").find('span').text(response.message);
+                }
+                else
+                    $(".myAlert-top").find('span').text(response.message);
+                $(window).scrollTop(0);
+            })
+        } else {
+            $.ajax({
+                    url: "/subscription/delete/" + topicId, type: "delete", success: function (response) {
+                        if (response.status) {
+                            $(".myAlert-top").addClass("alert-success").removeClass("alert-danger");
+                            $(".myAlert-top").find('span').text(response.message);
+                        }
+                        else
+                            $(".myAlert-top").find('span').text(response.message);
+                        $(window).scrollTop(0);
+                    }
+                }
+            )
+        }
+        // window.reload();
+    })
 
-          },
-          messages:
-              {
-                  name:"Please Enter Topic"
-              },
+    $("form[name='topicForm']").validate({
+        rules: {
+            name: {required: true},
 
-          submitHandler:function (form) {
-              form.submit();
-              
-          }
+        },
+        messages:
+            {
+                name: "Please Enter Topic"
+            },
 
-      });
+        submitHandler: function (form) {
+            form.submit();
+
+        }
 
     });
+
+});
 

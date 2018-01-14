@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/subscription")
 public class SubscriptionController {
@@ -17,9 +19,8 @@ public class SubscriptionController {
 
     @PostMapping("/save")
     @ResponseBody
-    public ResponseDTO save(@ModelAttribute("subscrptn") Subscription subscrptn) {
-        return subscriptionService.save(subscrptn);
-
+    public ResponseDTO save(@ModelAttribute Subscription subscription, HttpServletRequest httpServletRequest) {
+        return subscriptionService.save(subscription);
     }
 
 

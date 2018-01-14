@@ -1,6 +1,7 @@
 package com.sagarandcompany.linkSharing.domains;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sagarandcompany.linkSharing.utility.Seriousness;
 
 import javax.persistence.*;
 
@@ -16,6 +17,16 @@ public class Subscription extends BaseEntity {
     @OneToOne
     @JoinColumn(nullable = false)
     private User user;
+
+    private Seriousness seriousness;
+
+    public Seriousness getSeriousness() {
+        return seriousness;
+    }
+
+    public void setSeriousness(Seriousness seriousness) {
+        this.seriousness = seriousness;
+    }
 
     public Long getSubscription_id() {
         return subscription_id;

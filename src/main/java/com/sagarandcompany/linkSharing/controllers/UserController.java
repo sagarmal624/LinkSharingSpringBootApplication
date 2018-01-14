@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController {
 
     @Autowired
     UserService userService;
@@ -29,14 +29,8 @@ public class UserController {
 
     @RequestMapping("/userUpdate")
     public ModelAndView profile() throws Exception {
-        ModelAndView modelAndView = new ModelAndView("profile");
-        modelAndView.addObject("topics", topicService.getTopicList());
-        modelAndView.addObject("subscriptions", subscriptionService.getSubscriptions());
-        modelAndView.addObject("resource", new ResourceVO());
-        modelAndView.addObject("response", new ResponseDTO());
+        ModelAndView modelAndView = getModalAndView("profile");
         modelAndView.addObject("user", User.getLoginUser());
-        modelAndView.addObject("username", User.getLoginUser().getFullname());
-        modelAndView.addObject("topic", new TopicVO());
         return modelAndView;
     }
 
@@ -48,7 +42,6 @@ public class UserController {
         modelAndView.addObject("user", responseDTO.getData());
         modelAndView.addObject("response", responseDTO);
         modelAndView.setViewName("login");
-
         return modelAndView;
 
     }
@@ -77,20 +70,8 @@ public class UserController {
     @PostMapping("/update")
     public ModelAndView updateUser(@ModelAttribute("user") User user) throws Exception {
         ResponseDTO responseDTO = userService.updateuser(user);
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = getModalAndView("home");
         modelAndView.addObject("user", responseDTO.getData());
-        modelAndView.addObject("response", responseDTO);
-        modelAndView.addObject("topics", topicService.getTopicList());
-        modelAndView.addObject("subscriptions", subscriptionService.getSubscriptions());
-        modelAndView.addObject("unreadResources", resourceService.getResources());
-        modelAndView.addObject("resource", new ResourceVO());
-        modelAndView.addObject("username", ((UserVO) responseDTO.getData()).getUsername());
-        modelAndView.addObject("subssize", subscriptionService.getSubscriptions().size());
-        modelAndView.addObject("topicsize", topicService.getTopicList().size());
-        modelAndView.addObject("topic", new TopicVO());
-
-
-        modelAndView.setViewName("home");
         return modelAndView;
     }
 

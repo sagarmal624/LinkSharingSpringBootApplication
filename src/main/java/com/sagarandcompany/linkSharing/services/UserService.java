@@ -21,28 +21,37 @@ public class UserService {
     @Value("${linksharing.user.error}")
     private String error;
 
+    @Value("${linksharing.user.exist}")
+    private String existMsg;
+
     @Autowired
     CloudnaryService cloudnaryService;
 
     public ResponseDTO save(User user) {
 
         ResponseDTO responseDTO = new ResponseDTO();
+        User alreadyExistUser = userRepository.findByEmailOrUserName(user);
+        responseDTO.setData(user);
 
-        User savedUser = userRepository.save(user);
-        if (savedUser.getUser_id() != null) {
-            UserVO userVO = new UserVO();
-            userVO.setUser_id(user.getUser_id());
-            userVO.setEmail(user.getEmail());
-            userVO.setFirstName(user.getFirstName());
-            userVO.setLastName(user.getLastName());
-            userVO.setUsername(user.getUsername());
-            userVO.setPassword(user.getPassword());
+        if (alreadyExistUser == null) {
+            User savedUser = userRepository.save(user);
+            if (savedUser.getUser_id() != null) {
+                UserVO userVO = new UserVO();
+                userVO.setUser_id(user.getUser_id());
+                userVO.setEmail(user.getEmail());
+                userVO.setFirstName(user.getFirstName());
+                userVO.setLastName(user.getLastName());
+                userVO.setUsername(user.getUsername());
+                userVO.setPassword(user.getPassword());
+                responseDTO.setData(userVO);
+                responseDTO.setMessageAndStatus(success, true);
 
-            responseDTO.setData(userVO);
-            responseDTO.setMessageAndStatus(success, true);
-
+            } else {
+                responseDTO.setMessageAndStatus(error, false);
+            }
         } else {
-            responseDTO.setMessageAndStatus(error, false);
+            responseDTO.setMessageAndStatus(existMsg, false);
+
         }
         return responseDTO;
     }
