@@ -32,7 +32,9 @@ public class BaseController {
         modelAndView.addObject("topic", new TopicVO());
         modelAndView.addObject("visibilities", Visibility.values());
         modelAndView.addObject("seriousnessValues", Seriousness.values());
-
+        if (viewName.equals("home")) {
+            modelAndView.addObject("unreadResources", resourceService.getResources());
+        }
         return modelAndView;
     }
 
